@@ -1,4 +1,4 @@
-# clockinclockout-rest
+# clockinclockout-rest | clkio-rest
 
 Related projects;
 - clockinclockout-jaxws; https://github.com/jeanvillete/clockinclockout-jaxws
