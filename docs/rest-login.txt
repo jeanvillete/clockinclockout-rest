@@ -1,0 +1,18 @@
+*LoginBinding.doLogin( User )
+POST http://rest.clkio.com/login (doLogin) (creating session record for a user/pass)
+{
+  "emailAddress" : "myemail@email.com",
+  "password" : "mypassword"
+}
+===>
+{
+  "message" : "",
+  "loginCode" : "$2a$10$vtbWc3lv5cS/J2NyPC0FAeFGvjbEEfR8pFYC84MCv/uSxch94Iibi"
+}
+
+*LoginBinding.doLogout( User )
+DELETE http://rest.clkio.com/login (doLogout) (deleting session record)
+===>
+{
+  "message" : ""
+}

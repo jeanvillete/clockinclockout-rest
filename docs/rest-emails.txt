@@ -1,0 +1,34 @@
+*EmailBinding.confirm( Email )
+PATCH http://rest.clkio.com/emails
+{
+  "emailAddress" : "myemail@email.com"
+  "confirmationCode" : "$2a$10$FstmG15nLiQCvMFXE4YcLufRZCtmempK8J3Fw3966XwMzPAXmtVZG"
+}
+===>
+{
+  "message" : "Email confirmation processed successfully."
+}
+
+*EmailBinding.insert( Email )
+POST http://rest.clkio.com/emails
+{
+  "emailAddress" : "myNewEmail@email.com"
+}
+===>
+
+*EmailBinding.list()
+GET http://rest.clkio.com/emails
+===>
+
+*EmailBinding.delete( Email )
+DELETE http://rest.clkio.com/emails/28
+
+* EmailBinding.setEmailAsPrimary( Email )
+PATCH http://rest.clkio.com/emails/28
+{
+  "primary" : "true"
+}
+===>
+{
+  "message" : "Success on set email as primary."
+}

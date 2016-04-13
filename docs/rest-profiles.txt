@@ -1,0 +1,66 @@
+*ProfileBinding.list()
+GET http://rest.clkio.com/profiles
+===>
+{
+  "message" : "",
+  "profiles" : [
+    {
+      "id" : "1",
+      "description" : "default profile",
+      "hoursFormat" : "H:mm",
+      "dateFormat" : "yyyy-MM-dd",
+      "expectedSunday" : "00:00",
+      "expectedMonday" : "08:00",
+      "expectedTuesday" : "08:00",
+      "expectedWednesday" : "08:00",
+      "expectedThursday" : "08:00",
+      "expectedFriday" : "08:00",
+      "expectedSaturday" : "08:00"
+    }
+  ]
+}
+
+*ProfileBinding.insert( Profile )
+POST http://rest.clkio.com/profiles
+{
+  "description" : "my new profile",
+  "hoursFormat" : "H:mm",
+  "dateFormat" : "yyyy-MM-dd",
+  "expectedSunday" : "00:00",
+  "expectedMonday" : "08:00",
+  "expectedTuesday" : "08:00",
+  "expectedWednesday" : "08:00",
+  "expectedThursday" : "08:00",
+  "expectedFriday" : "08:00",
+  "expectedSaturday" : "08:00"
+}
+===>
+{
+  "message" : ""
+}
+
+*ProfileBinding.update( Profile )
+PUT  http://rest.clkio.com/profiles/2
+{
+  "description" : "updating profile",
+  "hoursFormat" : "HH:mm:ss",
+  "dateFormat" : "dd/MM/yyyy",
+  "expectedSunday" : "00:00",
+  "expectedMonday" : "08:00",
+  "expectedTuesday" : "08:00",
+  "expectedWednesday" : "08:00",
+  "expectedThursday" : "08:00",
+  "expectedFriday" : "08:00",
+  "expectedSaturday" : "08:00"
+}
+===>
+{
+  "message" : ""
+}
+
+*ProfileBinding.delete( Profile )
+DELETE  http://rest.clkio.com/profiles/2
+===>
+{
+  "message" : ""
+}

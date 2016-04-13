@@ -1,0 +1,43 @@
+*ManualEnteringReasonBinding.list()
+GET http://rest.clkio.com/profile/1/reasons
+===>
+{
+  "message" : "",
+  "reasons" : [
+    {
+      "id" : "1",
+      "reason" : "Vacation"
+    },
+    {
+      "id" : "2",
+      "reason" : "External Services"
+    }
+  ]
+}
+
+*ManualEnteringReasonBinding.insert( Reason )
+POST http://rest.clkio.com/profile/1/reasons
+{
+  "reason" : "this is my new reason record"
+}
+===>
+{
+  "message" : ""
+}
+
+*ManualEnteringReasonBinding.update( Reason )
+PUT http://rest.clkio.com/profile/1/reasons/3
+{
+  "reason" : "updating reason record"
+}
+===>
+{
+  "message" : ""
+}
+
+*ManualEnteringReasonBinding.delete( Reason )
+DELETE http://rest.clkio.com/profile/1/reasons/3
+===>
+{
+  "message" : ""
+}
