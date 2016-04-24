@@ -3,11 +3,9 @@ POST http://rest.clkio.com/users
 Accept: "application/json"
 Content-Type: "application/json"
 {
-  "user" : {
-    "email":"myemail@email.com",
-    "password":"mypassword",
-    "locale":"pt_br"
-  }
+  "email":"myemail@email.com",
+  "password":"mypassword",
+  "locale":"pt_br"
 }
 ===> [success]
 Content-Type: application/json;charsert=utf-8
