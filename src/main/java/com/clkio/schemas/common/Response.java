@@ -4,11 +4,13 @@ package com.clkio.schemas.common;
 import java.io.IOException;
 import java.io.StringWriter;
 
+import javax.xml.bind.JAXB;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
+
 import com.clkio.schemas.adjusting.ListAdjustingResponse;
 import com.clkio.schemas.email.ListEmailResponse;
 import com.clkio.schemas.login.LoginResponse;
@@ -19,8 +21,7 @@ import com.clkio.schemas.timecard.GetTimeCardResponse;
 import com.clkio.schemas.timecard.GetTotalTimeMonthlyResponse;
 import com.clkio.schemas.timecard.GetTotalTimeResponse;
 import com.clkio.web.enums.ContentType;
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 /**
@@ -62,7 +63,15 @@ public class Response {
     @XmlElement(required = true)
     protected String message;
 
-    /**
+    public Response() {
+    }
+    
+    public Response( String message ) {
+		super();
+		this.message = message;
+	}
+
+	/**
      * Gets the value of the message property.
      * 
      * @return
@@ -87,20 +96,18 @@ public class Response {
     }
 
     public String getMessage( ContentType accept ) {
-		if ( accept == null ) return "";
-		else if ( accept.equals( ContentType.APPLICATION_JSON ) ) {
-			StringWriter sw = new StringWriter();
+    	StringWriter sw = new StringWriter();
+		
+    	if ( accept == null ) throw new IllegalArgumentException( "Argument 'accept' is mandatory." );
+		else if ( accept.equals( ContentType.APPLICATION_JSON ) )
 			try {
-				JsonGenerator jGenerator = new JsonFactory().createGenerator( sw );
-				jGenerator.writeStartObject();
-				jGenerator.writeStringField( "message", this.getMessage() );
-				jGenerator.writeEndObject();
-				jGenerator.close();
+				new ObjectMapper().writeValue( sw, this );
 			} catch ( IOException e ) { }
-			return sw.toString();
-		} else if ( accept.equals( ContentType.APPLICATION_XML ) ) {
-			throw new IllegalStateException("Method not implemented yet!");
-		} else throw new IllegalArgumentException( "Invalid value for 'accept' argument." );
+		else if ( accept.equals( ContentType.APPLICATION_XML ) )
+			JAXB.marshal( this, sw );
+		else throw new IllegalArgumentException( "Invalid value for 'accept' argument." );
+		
+		return sw.toString();
 	}
     
 }

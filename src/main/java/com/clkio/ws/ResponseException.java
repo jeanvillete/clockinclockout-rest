@@ -1,15 +1,12 @@
 
 package com.clkio.ws;
 
-import java.io.IOException;
-import java.io.StringWriter;
-
 import javax.xml.ws.WebFault;
 
+import com.clkio.schemas.common.Response;
 import com.clkio.schemas.common.ResponseFault;
+import com.clkio.web.constants.AppConstants;
 import com.clkio.web.enums.ContentType;
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.JsonGenerator;
 
 
 /**
@@ -23,6 +20,8 @@ public class ResponseException
     extends Exception
 {
 
+	private static final long serialVersionUID = AppConstants.SERIAL_VERSION_UID;
+	
     /**
      * Java type that goes as soapenv:Fault detail element.
      * 
@@ -65,20 +64,9 @@ public class ResponseException
     }
     
     public String getMessage( ContentType accept ) {
-		if ( accept == null ) return "";
-		else if ( accept.equals( ContentType.APPLICATION_JSON ) ) {
-			StringWriter sw = new StringWriter();
-			try {
-				JsonGenerator jGenerator = new JsonFactory().createGenerator( sw );
-				jGenerator.writeStartObject();
-				jGenerator.writeStringField( "message", this.getMessage() );
-				jGenerator.writeEndObject();
-				jGenerator.close();
-			} catch ( IOException e ) { }
-			return sw.toString();
-		} else if ( accept.equals( ContentType.APPLICATION_XML ) ) {
-			throw new IllegalStateException("Method not implemented yet!");
-		} else throw new IllegalArgumentException( "Invalid value for 'accept' argument." );
+    	return new Response( this.getMessage() ).getMessage( accept );
 	}
 
+    
+    
 }

@@ -8,18 +8,6 @@
 	<display-name>clkio-rest</display-name>
 
 	<context-param>
-		<param-name>contextConfigLocation</param-name>
-		<param-value>
-			classpath:springframework/spring-application-context.xml
-			classpath:springframework/spring-ws-user.xml
-			classpath:springframework/spring-ws-email.xml
-		</param-value>
-	</context-param>
-	<listener>
-		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-	</listener>
-
-	<context-param>
 		<param-name>log4jConfigLocation</param-name>
 		<param-value>file:/opt/etc/clkio-rest/log4j.xml</param-value>
 	</context-param>
@@ -29,6 +17,18 @@
 	</context-param>
 	<listener>
 		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+	</listener>
+
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+			classpath:springframework/spring-application-context.xml
+			classpath:springframework/spring-ws-user.xml
+			classpath:springframework/spring-ws-email.xml
+		</param-value>
+	</context-param>
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 
 	<servlet>
