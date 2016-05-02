@@ -4,7 +4,8 @@ POST http://rest.clkio.com/login (doLogin) (creating session record for a user/p
   "emailAddress" : "myemail@email.com",
   "password" : "mypassword"
 }
-===>
+=> responds =>
+201 Created
 {
   "message" : "",
   "loginCode" : "$2a$10$vtbWc3lv5cS/J2NyPC0FAeFGvjbEEfR8pFYC84MCv/uSxch94Iibi"
@@ -12,7 +13,8 @@ POST http://rest.clkio.com/login (doLogin) (creating session record for a user/p
 
 *LoginBinding.doLogout( User )
 DELETE http://rest.clkio.com/login (doLogout) (deleting session record)
-===>
+=> responds =>
+200 OK
 {
   "message" : ""
 }
