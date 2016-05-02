@@ -3,21 +3,43 @@ POST http://rest.clkio.com/emails
 {
   "emailAddress" : "myNewEmail@email.com"
 }
-===>
+=> responds =>
+201 Created
+{
+  "message" : "Email record persisted successfully."
+}
 
 *EmailBinding.list()
 GET http://rest.clkio.com/emails
-===>
+=> responds =>
+200 OK
+{
+  "emails" : [
+    {
+      "id":1,
+      "emailAddress":"myEmail@email.com",
+      "primary":true
+    },
+    {
+      "id":2,
+      "emailAddress":"other@email.com",
+      "primary":false
+    }
+  ]
+}
 
 *EmailBinding.delete( Email )
 DELETE http://rest.clkio.com/emails/28
+=> responds =>
+200 OK
 
 *EmailBinding.confirm( Email )
 POST http://rest.clkio.com/emails/confirmations/$2a$10$FstmG15nLiQCvMFXE4YcLufRZCtmempK8J3Fw3966XwMzPAXmtVZG
 {
   "emailAddress" : "myemail@email.com"
 }
-===>
+=> responds =>
+200 OK
 {
   "message" : "Email confirmation processed successfully."
 }
@@ -28,7 +50,8 @@ PUT http://rest.clkio.com/emails/28
   "emailAddress" : "myemail@email.com",
   "primary" : "true"
 }
-===>
+=> responds =>
+200 OK
 {
   "message" : "Success on set email as primary."
 }
