@@ -7,19 +7,19 @@ Content-Type: "application/json"
   "password":"mypassword",
   "locale":"pt_br"
 }
-===> [success]
+[on success] => responds =>
 Content-Type: application/json;charsert=utf-8
 HTTP/1.1 201 Created
 {
   "message":"User persisted successfully."
 }
-===> [error]
+[on error] => responds =>
 Content-Type: application/json;charsert=utf-8
 HTTP/1.1 409 Conflict
 {
   "message":"Email adress already in use."
 }
-===> [error]
+[on error] => responds =>
 Content-Type: application/json;charsert=utf-8
 HTTP/1.1 400 Bad Request
 {
