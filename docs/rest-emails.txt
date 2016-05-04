@@ -34,7 +34,7 @@ DELETE http://rest.clkio.com/emails/28
 200 OK
 
 *EmailBinding.confirm( Email )
-POST http://rest.clkio.com/emails/confirmations/$2a$10$FstmG15nLiQCvMFXE4YcLufRZCtmempK8J3Fw3966XwMzPAXmtVZG
+POST http://rest.clkio.com/emails/confirmations/%242a%2410%24FstmG15nLiQCvMFXE4YcLufRZCtmempK8J3Fw3966XwMzPAXmtVZG ($2a$10$FstmG15nLiQCvMFXE4YcLufRZCtmempK8J3Fw3966XwMzPAXmtVZG)
 {
   "emailAddress" : "myemail@email.com"
 }
