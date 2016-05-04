@@ -35,7 +35,16 @@ public class ConfirmEmailRequest {
     @XmlElement(required = true)
     protected Email email;
 
-    /**
+    public ConfirmEmailRequest() {
+    	super();
+    }
+    
+    public ConfirmEmailRequest( Email email ) {
+		super();
+		this.email = email;
+	}
+
+	/**
      * Gets the value of the email property.
      * 
      * @return

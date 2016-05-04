@@ -50,7 +50,17 @@ public class Email {
     protected boolean confirmed;
     protected boolean primary;
 
-    /**
+    public Email() {
+    	super();
+    }
+    
+    public Email( String emailAddress, String confirmationCode ) {
+		super();
+		this.emailAddress = emailAddress;
+		this.confirmationCode = confirmationCode;
+	}
+
+	/**
      * Gets the value of the id property.
      * 
      * @return

@@ -35,7 +35,16 @@ public class InsertEmailRequest {
     @XmlElement(required = true)
     protected Email email;
 
-    /**
+    public InsertEmailRequest() {
+    	super();
+    }
+    
+    public InsertEmailRequest( Email email ) {
+		super();
+		this.email = email;
+	}
+
+	/**
      * Gets the value of the email property.
      * 
      * @return
