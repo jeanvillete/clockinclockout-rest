@@ -4,4 +4,5 @@
 .settings/
 *.swp
 *.bak
+bin/
 target/

@@ -2,7 +2,6 @@ package com.clkio.web;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.StringWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -33,7 +32,6 @@ public class UserServlet extends CommonHttpServlet {
 	@Override
 	protected void doPost( HttpServletRequest req, HttpServletResponse resp ) throws ServletException, IOException {
 		ContentType accept = null;
-		StringWriter sw = new StringWriter();
 		PrintWriter out = resp.getWriter();
 		try {
 			accept = ContentType.parse( req.getHeader( "Accept" ) );
@@ -64,7 +62,6 @@ public class UserServlet extends CommonHttpServlet {
 			resp.setStatus( HttpServletResponse.SC_INTERNAL_SERVER_ERROR );
 			resp.resetBuffer();
 		} finally {
-			if ( sw != null ) sw.close();
 			if ( out != null ) out.close();
 		}
 	}

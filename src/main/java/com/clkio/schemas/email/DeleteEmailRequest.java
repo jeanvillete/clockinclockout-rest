@@ -35,7 +35,16 @@ public class DeleteEmailRequest {
     @XmlElement(required = true)
     protected Email email;
 
-    /**
+    public DeleteEmailRequest() {
+		super();
+    }
+    
+    public DeleteEmailRequest( Email email ) {
+		super();
+		this.email = email;
+	}
+
+	/**
      * Gets the value of the email property.
      * 
      * @return

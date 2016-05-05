@@ -49,6 +49,7 @@
 	<servlet-mapping>
 		<servlet-name>emailServlet</servlet-name>
 		<url-pattern>/emails</url-pattern>
+		<url-pattern>/emails/*</url-pattern>
 		<url-pattern>/emails/confirmations/*</url-pattern>
 	</servlet-mapping>
 

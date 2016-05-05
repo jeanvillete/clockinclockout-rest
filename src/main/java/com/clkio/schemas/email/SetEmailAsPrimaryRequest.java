@@ -35,7 +35,16 @@ public class SetEmailAsPrimaryRequest {
     @XmlElement(required = true)
     protected Email email;
 
-    /**
+    public SetEmailAsPrimaryRequest() {
+    	super();
+    }
+    
+    public SetEmailAsPrimaryRequest( Email email ) {
+		super();
+		this.email = email;
+	}
+
+	/**
      * Gets the value of the email property.
      * 
      * @return

@@ -2,7 +2,7 @@ package com.clkio.web;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.StringWriter;
+import java.math.BigInteger;
 import java.net.URLDecoder;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -18,8 +18,11 @@ import org.springframework.util.StringUtils;
 
 import com.clkio.schemas.common.Response;
 import com.clkio.schemas.email.ConfirmEmailRequest;
+import com.clkio.schemas.email.DeleteEmailRequest;
 import com.clkio.schemas.email.Email;
 import com.clkio.schemas.email.InsertEmailRequest;
+import com.clkio.schemas.email.ListEmailRequest;
+import com.clkio.schemas.email.SetEmailAsPrimaryRequest;
 import com.clkio.web.constants.AppConstants;
 import com.clkio.web.enums.ContentType;
 import com.clkio.web.exception.BadRequestException;
@@ -41,7 +44,6 @@ public class EmailServlet extends CommonHttpServlet {
 	@Override
 	protected void doPost( HttpServletRequest req, HttpServletResponse resp ) throws ServletException, IOException {
 		ContentType accept = null;
-		StringWriter sw = new StringWriter();
 		PrintWriter out = resp.getWriter();
 		try {
 			accept = ContentType.parse( req.getHeader( "Accept" ) );
@@ -58,17 +60,21 @@ public class EmailServlet extends CommonHttpServlet {
 			else throw new IllegalStateException( "No valid value for header 'Content-Type'. contentType=[" + accept.getValue() + "]" );
 
 			Response response = null;
+			int statusCode;
 			Matcher matcher = Pattern.compile( "^http.+\\/confirmations\\/?(.*)$" ).matcher( req.getRequestURL().toString() );
 			if ( matcher.matches() ) {
 				String confirmationCode = matcher.group( 1 );
 				if ( StringUtils.isEmpty( confirmationCode ) ) throw new BadRequestException( "No valid value provided for 'confirmationCode'" );
 				email.setConfirmationCode( URLDecoder.decode( confirmationCode, "UTF-8" ) );
 				response = this.service.confirm( new ConfirmEmailRequest( email ) );
-			} else
+				statusCode = HttpServletResponse.SC_OK;
+			} else {
 				response = this.service.insert( req.getHeader( AppConstants.CLKIO_LOGIN_CODE ), new InsertEmailRequest( email ) );
+				statusCode = HttpServletResponse.SC_CREATED;
+			}
 			
 			out.print( response.getMessage( accept ) );
-			resp.setStatus( HttpServletResponse.SC_CREATED );
+			resp.setStatus( statusCode );
 		} catch ( JsonParseException | JsonMappingException e ) {
 			resp.setStatus( HttpServletResponse.SC_BAD_REQUEST );
 		} catch ( DataBindingException e ) {
@@ -82,7 +88,126 @@ public class EmailServlet extends CommonHttpServlet {
 			resp.setStatus( HttpServletResponse.SC_INTERNAL_SERVER_ERROR );
 			resp.resetBuffer();
 		} finally {
-			if ( sw != null ) sw.close();
+			if ( out != null ) out.close();
+		}
+	}
+	
+	@Override
+	protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		ContentType accept = null;
+		PrintWriter out = resp.getWriter();
+		try {
+			accept = ContentType.parse( req.getHeader( "Accept" ) );
+			if ( accept == null ) throw new NotAcceptableException( "Header 'Accept' is mandatory and has to be either 'application/json' or 'application/xml'." );
+			resp.setContentType( accept.getValue() );
+			
+			Email email = null;
+			ContentType contentType = ContentType.parse( req.getHeader( "Content-Type" ) );
+			if ( contentType == null ) throw new NotAcceptableException( "Header 'Content-Type' is mandatory and has to be either 'application/json' or 'application/xml'." );
+			else if ( contentType.equals( ContentType.APPLICATION_JSON ) )
+				email = new ObjectMapper().readValue( req.getReader(), Email.class );
+			else if ( contentType.equals( ContentType.APPLICATION_XML ) )
+				email = JAXB.unmarshal( req.getReader(), Email.class );
+			else throw new IllegalStateException( "No valid value for header 'Content-Type'. contentType=[" + accept.getValue() + "]" );
+
+			if ( !email.isPrimary() )
+				throw new BadRequestException( "This service is aimed to set an 'email' record as primary, so this property has to be 'true'." );
+			
+			Matcher matcher = Pattern.compile( "^http.+\\/emails\\/(\\d+)$" ).matcher( req.getRequestURL().toString() );
+			if ( matcher.matches() ) {
+				try {
+					email.setId( new BigInteger( matcher.group( 1 ) ) );
+				} catch ( NumberFormatException e ) {
+					throw new BadRequestException();
+				}
+			} else throw new BadRequestException();
+			
+			out.print( this.service.setEmailAsPrimary( req.getHeader( AppConstants.CLKIO_LOGIN_CODE ), new SetEmailAsPrimaryRequest( email ) ).getMessage( accept ) );
+			resp.setStatus( HttpServletResponse.SC_OK );
+		} catch ( JsonParseException | JsonMappingException e ) {
+			resp.setStatus( HttpServletResponse.SC_BAD_REQUEST );
+		} catch ( DataBindingException e ) {
+			resp.setStatus( HttpServletResponse.SC_BAD_REQUEST );
+		} catch ( ResponseException e ) {
+			resp.setStatus( e.getStatusCode() );
+			out.println( e.getMessage( accept ) );
+		} catch ( RestException e ) {
+			resp.sendError( e.getStatusCode(), e.getMessage() );
+		} catch ( Exception e ) {
+			resp.setStatus( HttpServletResponse.SC_INTERNAL_SERVER_ERROR );
+			resp.resetBuffer();
+		} finally {
+			if ( out != null ) out.close();
+		}
+	}
+	
+	@Override
+	protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		ContentType accept = null;
+		PrintWriter out = resp.getWriter();
+		try {
+			accept = ContentType.parse( req.getHeader( "Accept" ) );
+			if ( accept == null ) throw new NotAcceptableException( "Header 'Accept' is mandatory and has to be either 'application/json' or 'application/xml'." );
+			resp.setContentType( accept.getValue() );
+			
+			Email email = null;
+			ContentType contentType = ContentType.parse( req.getHeader( "Content-Type" ) );
+			if ( contentType == null ) throw new NotAcceptableException( "Header 'Content-Type' is mandatory and has to be either 'application/json' or 'application/xml'." );
+			else if ( contentType.equals( ContentType.APPLICATION_JSON ) )
+				email = new ObjectMapper().readValue( req.getReader(), Email.class );
+			else if ( contentType.equals( ContentType.APPLICATION_XML ) )
+				email = JAXB.unmarshal( req.getReader(), Email.class );
+			else throw new IllegalStateException( "No valid value for header 'Content-Type'. contentType=[" + accept.getValue() + "]" );
+
+			Matcher matcher = Pattern.compile( "^http.+\\/emails\\/(\\d+)$" ).matcher( req.getRequestURL().toString() );
+			if ( matcher.matches() ) {
+				try {
+					email.setId( new BigInteger( matcher.group( 1 ) ) );
+				} catch ( NumberFormatException e ) {
+					throw new BadRequestException();
+				}
+			} else throw new BadRequestException();
+			
+			out.print( this.service.delete( req.getHeader( AppConstants.CLKIO_LOGIN_CODE ), new DeleteEmailRequest( email ) ).getMessage( accept ) );
+			resp.setStatus( HttpServletResponse.SC_OK );
+		} catch ( JsonParseException | JsonMappingException e ) {
+			resp.setStatus( HttpServletResponse.SC_BAD_REQUEST );
+		} catch ( DataBindingException e ) {
+			resp.setStatus( HttpServletResponse.SC_BAD_REQUEST );
+		} catch ( ResponseException e ) {
+			resp.setStatus( e.getStatusCode() );
+			out.println( e.getMessage( accept ) );
+		} catch ( RestException e ) {
+			resp.sendError( e.getStatusCode(), e.getMessage() );
+		} catch ( Exception e ) {
+			resp.setStatus( HttpServletResponse.SC_INTERNAL_SERVER_ERROR );
+			resp.resetBuffer();
+		} finally {
+			if ( out != null ) out.close();
+		}
+	}
+	
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		ContentType accept = null;
+		PrintWriter out = resp.getWriter();
+		try {
+			accept = ContentType.parse( req.getHeader( "Accept" ) );
+			if ( accept == null ) throw new NotAcceptableException( "Header 'Accept' is mandatory and has to be either 'application/json' or 'application/xml'." );
+			resp.setContentType( accept.getValue() );
+			out.print( this.service.list( req.getHeader( AppConstants.CLKIO_LOGIN_CODE ), new ListEmailRequest() ).getMessage( accept ) );
+			resp.setStatus( HttpServletResponse.SC_OK );
+		} catch ( DataBindingException e ) {
+			resp.setStatus( HttpServletResponse.SC_BAD_REQUEST );
+		} catch ( ResponseException e ) {
+			resp.setStatus( e.getStatusCode() );
+			out.println( e.getMessage( accept ) );
+		} catch ( RestException e ) {
+			resp.sendError( e.getStatusCode(), e.getMessage() );
+		} catch ( Exception e ) {
+			resp.setStatus( HttpServletResponse.SC_INTERNAL_SERVER_ERROR );
+			resp.resetBuffer();
+		} finally {
 			if ( out != null ) out.close();
 		}
 	}
