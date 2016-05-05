@@ -25,6 +25,7 @@
 			classpath:springframework/spring-application-context.xml
 			classpath:springframework/spring-ws-user.xml
 			classpath:springframework/spring-ws-email.xml
+			classpath:springframework/spring-ws-login.xml
 		</param-value>
 	</context-param>
 	<listener>
@@ -51,6 +52,16 @@
 		<url-pattern>/emails</url-pattern>
 		<url-pattern>/emails/*</url-pattern>
 		<url-pattern>/emails/confirmations/*</url-pattern>
+	</servlet-mapping>
+	
+	<!-- login -->
+	<servlet>
+		<servlet-name>loginServlet</servlet-name>
+		<servlet-class>com.clkio.web.LoginServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>loginServlet</servlet-name>
+		<url-pattern>/login</url-pattern>
 	</servlet-mapping>
 
 </web-app>

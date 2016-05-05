@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans-4.2.xsd" >
+
+	<bean id="loginWsService" class="org.springframework.remoting.jaxws.JaxWsPortProxyFactoryBean">
+		<property name="serviceInterface" value="com.clkio.ws.LoginPort"/>
+		<property name="wsdlDocumentUrl" value="http://ws.clkio.com"/>
+		<property name="endpointAddress" value="${clkio.ws.endpointAddress}/login"/>
+		<property name="namespaceUri"  value="http://ws.clkio.com"/>
+		<property name="serviceName" value="ClkIOWS"/>
+		<property name="portName" value="LoginService"/>
+		<property name="lookupServiceOnStartup" value="false"/>
+	</bean>
+	
+</beans>

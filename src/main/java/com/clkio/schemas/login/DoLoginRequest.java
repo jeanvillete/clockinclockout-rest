@@ -36,7 +36,16 @@ public class DoLoginRequest {
     @XmlElement(required = true)
     protected User user;
 
-    /**
+    public DoLoginRequest() {
+    	super();
+    }
+    
+    public DoLoginRequest( User user ) {
+		super();
+		this.user = user;
+	}
+
+	/**
      * Gets the value of the user property.
      * 
      * @return
