@@ -36,7 +36,16 @@ public class RequestResetPasswordRequest {
     @XmlElement(required = true)
     protected User user;
 
-    /**
+    public RequestResetPasswordRequest() {
+    	super();
+    }
+    
+    public RequestResetPasswordRequest( User user ) {
+		super();
+		this.user = user;
+	}
+
+	/**
      * Gets the value of the user property.
      * 
      * @return
