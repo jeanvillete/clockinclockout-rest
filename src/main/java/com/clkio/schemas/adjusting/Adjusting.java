@@ -49,7 +49,16 @@ public class Adjusting {
     @XmlElement(required = true, nillable = true)
     protected Profile profile;
 
-    /**
+    public Adjusting() {
+    	super();
+    }
+    
+    public Adjusting( BigInteger id ) {
+		super();
+		this.id = id;
+	}
+
+	/**
      * Gets the value of the id property.
      * 
      * @return

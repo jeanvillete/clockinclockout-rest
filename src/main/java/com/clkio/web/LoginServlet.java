@@ -17,6 +17,7 @@ import com.clkio.schemas.user.User;
 import com.clkio.web.constants.AppConstants;
 import com.clkio.web.enums.ContentType;
 import com.clkio.web.exception.NotAcceptableException;
+import com.clkio.web.exception.RestException;
 import com.clkio.ws.LoginPort;
 import com.clkio.ws.ResponseException;
 import com.fasterxml.jackson.core.JsonParseException;
@@ -57,7 +58,7 @@ public class LoginServlet extends CommonHttpServlet {
 		} catch ( ResponseException e ) {
 			resp.setStatus( e.getStatusCode() );
 			out.println( e.getMessage( accept ) );
-		} catch ( NotAcceptableException e ) {
+		} catch ( RestException e ) {
 			resp.sendError( e.getStatusCode(), e.getMessage() );
 		} catch ( Exception e ) {
 			resp.setStatus( HttpServletResponse.SC_INTERNAL_SERVER_ERROR );
@@ -82,7 +83,7 @@ public class LoginServlet extends CommonHttpServlet {
 		} catch ( ResponseException e ) {
 			resp.setStatus( e.getStatusCode() );
 			out.println( e.getMessage( accept ) );
-		} catch ( NotAcceptableException e ) {
+		} catch ( RestException e ) {
 			resp.sendError( e.getStatusCode(), e.getMessage() );
 		} catch ( Exception e ) {
 			resp.setStatus( HttpServletResponse.SC_INTERNAL_SERVER_ERROR );
