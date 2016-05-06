@@ -15,6 +15,7 @@ import javax.xml.bind.JAXB;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.clkio.schemas.profile.Profile;
+import com.clkio.schemas.reason.DeleteManualEnteringReasonRequest;
 import com.clkio.schemas.reason.InsertManualEnteringReasonRequest;
 import com.clkio.schemas.reason.ListManualEnteringReasonRequest;
 import com.clkio.schemas.reason.Reason;
@@ -161,5 +162,40 @@ public class ReasonServlet extends CommonHttpServlet {
 			if ( out != null ) out.close();
 		}
 	}
-	
+
+	@Override
+	protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		ContentType accept = null;
+		PrintWriter out = resp.getWriter();
+		try {
+			accept = ContentType.parse( req.getHeader( "Accept" ) );
+			if ( accept == null ) throw new NotAcceptableException( "Header 'Accept' is mandatory and has to be either 'application/json' or 'application/xml'." );
+			resp.setContentType( accept.getValue() );
+
+			Reason reason = null;
+			Matcher matcher = Pattern.compile( "^http.+\\/profiles\\/(\\d+)\\/reasons\\/(\\d+)\\/?$" ).matcher( req.getRequestURL().toString() );
+			if ( matcher.matches() ) {
+				try {
+					reason = new Reason( new BigInteger( matcher.group( 2 ) ) );
+					reason.setProfile( new Profile( new BigInteger( matcher.group( 1 ) ) ) );
+				} catch ( NumberFormatException e) {
+					throw new BadRequestException( "Invalid value provided for 'profileId'" );
+				}
+				out.print( this.service.delete( req.getHeader( AppConstants.CLKIO_LOGIN_CODE ), new DeleteManualEnteringReasonRequest( reason ) ).getMessage( accept ) );
+				resp.setStatus( HttpServletResponse.SC_OK );
+			} else throw new BadRequestException();
+		} catch ( DataBindingException e ) {
+			resp.setStatus( HttpServletResponse.SC_BAD_REQUEST );
+		} catch ( ResponseException e ) {
+			resp.setStatus( e.getStatusCode() );
+			out.println( e.getMessage( accept ) );
+		} catch ( RestException e ) {
+			resp.sendError( e.getStatusCode(), e.getMessage() );
+		} catch ( Exception e ) {
+			resp.setStatus( HttpServletResponse.SC_INTERNAL_SERVER_ERROR );
+			resp.resetBuffer();
+		} finally {
+			if ( out != null ) out.close();
+		}
+	}
 }

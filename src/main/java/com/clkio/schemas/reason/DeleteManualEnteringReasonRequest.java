@@ -35,7 +35,16 @@ public class DeleteManualEnteringReasonRequest {
     @XmlElement(required = true)
     protected Reason reason;
 
-    /**
+    public DeleteManualEnteringReasonRequest() {
+    	super();
+    }
+    
+    public DeleteManualEnteringReasonRequest( Reason reason ) {
+		super();
+		this.reason = reason;
+	}
+
+	/**
      * Gets the value of the reason property.
      * 
      * @return

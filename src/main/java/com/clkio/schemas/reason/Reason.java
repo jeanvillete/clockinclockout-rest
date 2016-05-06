@@ -45,7 +45,16 @@ public class Reason {
     @XmlElement(required = true)
     protected Profile profile;
 
-    /**
+    public Reason() {
+    	super();
+    }
+    
+    public Reason( BigInteger id ) {
+		super();
+		this.id = id;
+	}
+
+	/**
      * Gets the value of the id property.
      * 
      * @return
