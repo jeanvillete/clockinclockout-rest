@@ -32,8 +32,17 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class InsertProfileRequest {
 
-    @XmlElement(required = true)
+	@XmlElement(required = true)
     protected Profile profile;
+
+	public InsertProfileRequest() {
+		super();
+	}
+	
+	public InsertProfileRequest( Profile profile ) {
+		super();
+		this.profile = profile;
+	}
 
     /**
      * Gets the value of the profile property.
