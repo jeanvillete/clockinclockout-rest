@@ -1,4 +1,4 @@
-*AdjustingBinding.insert( Adjusting )
+*AdjustingBinding.list()
 GET http://rest.clkio.com/profile/1/adjustings
 => responds =>
 200 OK
