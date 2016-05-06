@@ -92,13 +92,11 @@ public class AdjustingServlet extends CommonHttpServlet {
 			
 			Matcher matcher = Pattern.compile( "^http.+\\/profiles\\/(\\d+)\\/adjustings\\/?$" ).matcher( req.getRequestURL().toString() );
 			if ( matcher.matches() ) {
-				BigInteger profileId;
 				try {
-					profileId = new BigInteger( matcher.group( 1 ) );
+					adjusting.setProfile( new Profile( new BigInteger( matcher.group( 1 ) ) ) );
 				} catch ( NumberFormatException e) {
 					throw new BadRequestException( "Invalid value provided for 'profileId'" );
 				}
-				adjusting.setProfile( new Profile( profileId ) );
 				out.print( this.service.insert( req.getHeader( AppConstants.CLKIO_LOGIN_CODE ), new InsertAdjustingRequest( adjusting ) ).getMessage( accept ) );
 				resp.setStatus( HttpServletResponse.SC_CREATED );
 			} else throw new BadRequestException();
@@ -139,15 +137,12 @@ public class AdjustingServlet extends CommonHttpServlet {
 			
 			Matcher matcher = Pattern.compile( "^http.+\\/profiles\\/(\\d+)\\/adjustings\\/(\\d+)\\/?$" ).matcher( req.getRequestURL().toString() );
 			if ( matcher.matches() ) {
-				BigInteger profileId, adjustingId;
 				try {
-					profileId = new BigInteger( matcher.group( 1 ) );
-					adjustingId = new BigInteger( matcher.group( 2 ) );
+					adjusting.setProfile( new Profile( new BigInteger( matcher.group( 1 ) ) ) );
+					adjusting.setId( new BigInteger( matcher.group( 2 ) ) );
 				} catch ( NumberFormatException e) {
 					throw new BadRequestException( "Invalid value provided for 'profileId' and/or 'adjustingId'" );
 				}
-				adjusting.setId( adjustingId );
-				adjusting.setProfile( new Profile( profileId ) );
 				out.print( this.service.update( req.getHeader( AppConstants.CLKIO_LOGIN_CODE ), new UpdateAdjustingRequest( adjusting ) ).getMessage( accept ) );
 				resp.setStatus( HttpServletResponse.SC_OK );
 			} else throw new BadRequestException();
@@ -176,17 +171,15 @@ public class AdjustingServlet extends CommonHttpServlet {
 			accept = ContentType.parse( req.getHeader( "Accept" ) );
 			if ( accept == null ) throw new NotAcceptableException( "Header 'Accept' is mandatory and has to be either 'application/json' or 'application/xml'." );
 			resp.setContentType( accept.getValue() );
+			Adjusting adjusting = null;
 			Matcher matcher = Pattern.compile( "^http.+\\/profiles\\/(\\d+)\\/adjustings\\/(\\d+)\\/?$" ).matcher( req.getRequestURL().toString() );
 			if ( matcher.matches() ) {
-				BigInteger profileId, adjustingId;
 				try {
-					profileId = new BigInteger( matcher.group( 1 ) );
-					adjustingId = new BigInteger( matcher.group( 2 ) );
+					adjusting = new Adjusting( new BigInteger( matcher.group( 2 ) ) );
+					adjusting.setProfile( new Profile( new BigInteger( matcher.group( 1 ) ) ) );
 				} catch ( NumberFormatException e) {
 					throw new BadRequestException( "Invalid value provided for 'profileId' and/or 'adjustingId'" );
 				}
-				Adjusting adjusting = new Adjusting( adjustingId );
-				adjusting.setProfile( new Profile( profileId ) );
 				out.print( this.service.delete( req.getHeader( AppConstants.CLKIO_LOGIN_CODE ), new DeleteAdjustingRequest( adjusting ) ).getMessage( accept ) );
 				resp.setStatus( HttpServletResponse.SC_OK );
 			} else throw new BadRequestException();
