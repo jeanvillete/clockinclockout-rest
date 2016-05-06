@@ -35,7 +35,16 @@ public class DeleteProfileRequest {
     @XmlElement(required = true)
     protected Profile profile;
 
-    /**
+    public DeleteProfileRequest() {
+    	super();
+    }
+    
+    public DeleteProfileRequest( Profile profile ) {
+		super();
+		this.profile = profile;
+	}
+
+	/**
      * Gets the value of the profile property.
      * 
      * @return

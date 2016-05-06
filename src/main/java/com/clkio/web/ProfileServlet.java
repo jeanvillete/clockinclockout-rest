@@ -14,6 +14,7 @@ import javax.xml.bind.JAXB;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.clkio.schemas.profile.DeleteProfileRequest;
 import com.clkio.schemas.profile.InsertProfileRequest;
 import com.clkio.schemas.profile.ListProfileRequest;
 import com.clkio.schemas.profile.Profile;
@@ -129,6 +130,42 @@ public class ProfileServlet extends CommonHttpServlet {
 			resp.setStatus( HttpServletResponse.SC_OK );
 		} catch ( JsonParseException | JsonMappingException e ) {
 			resp.setStatus( HttpServletResponse.SC_BAD_REQUEST );
+		} catch ( DataBindingException e ) {
+			resp.setStatus( HttpServletResponse.SC_BAD_REQUEST );
+		} catch ( ResponseException e ) {
+			resp.setStatus( e.getStatusCode() );
+			out.println( e.getMessage( accept ) );
+		} catch ( RestException e ) {
+			resp.sendError( e.getStatusCode(), e.getMessage() );
+		} catch ( Exception e ) {
+			resp.setStatus( HttpServletResponse.SC_INTERNAL_SERVER_ERROR );
+			resp.resetBuffer();
+		} finally {
+			if ( out != null ) out.close();
+		}
+	}
+	
+	@Override
+	protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		ContentType accept = null;
+		PrintWriter out = resp.getWriter();
+		try {
+			accept = ContentType.parse( req.getHeader( "Accept" ) );
+			if ( accept == null ) throw new NotAcceptableException( "Header 'Accept' is mandatory and has to be either 'application/json' or 'application/xml'." );
+			resp.setContentType( accept.getValue() );
+
+			Profile profile = null;
+			Matcher matcher = Pattern.compile( "^http.+\\/profiles\\/(\\d+)\\/?$" ).matcher( req.getRequestURL().toString() );
+			if ( matcher.matches() ) {
+				try {
+					profile = new Profile( new BigInteger( matcher.group( 1 ) ) );
+				} catch ( NumberFormatException e) {
+					throw new BadRequestException( "Invalid value provided for 'profileId'" );
+				}
+			} else throw new BadRequestException();
+			
+			out.print( this.service.delete( req.getHeader( AppConstants.CLKIO_LOGIN_CODE ), new DeleteProfileRequest( profile ) ).getMessage( accept ) );
+			resp.setStatus( HttpServletResponse.SC_OK );
 		} catch ( DataBindingException e ) {
 			resp.setStatus( HttpServletResponse.SC_BAD_REQUEST );
 		} catch ( ResponseException e ) {
