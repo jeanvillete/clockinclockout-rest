@@ -35,7 +35,16 @@ public class UpdateAdjustingRequest {
     @XmlElement(required = true)
     protected Adjusting adjusting;
 
-    /**
+    public UpdateAdjustingRequest() {
+    	super();
+    }
+    
+    public UpdateAdjustingRequest( Adjusting adjusting ) {
+		super();
+		this.adjusting = adjusting;
+	}
+
+	/**
      * Gets the value of the adjusting property.
      * 
      * @return
