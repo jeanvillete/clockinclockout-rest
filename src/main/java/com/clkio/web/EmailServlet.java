@@ -151,18 +151,10 @@ public class EmailServlet extends CommonHttpServlet {
 			resp.setContentType( accept.getValue() );
 			
 			Email email = null;
-			ContentType contentType = ContentType.parse( req.getHeader( "Content-Type" ) );
-			if ( contentType == null ) throw new NotAcceptableException( "Header 'Content-Type' is mandatory and has to be either 'application/json' or 'application/xml'." );
-			else if ( contentType.equals( ContentType.APPLICATION_JSON ) )
-				email = new ObjectMapper().readValue( req.getReader(), Email.class );
-			else if ( contentType.equals( ContentType.APPLICATION_XML ) )
-				email = JAXB.unmarshal( req.getReader(), Email.class );
-			else throw new IllegalStateException( "No valid value for header 'Content-Type'. contentType=[" + accept.getValue() + "]" );
-
 			Matcher matcher = Pattern.compile( "^http.+\\/emails\\/(\\d+)$" ).matcher( req.getRequestURL().toString() );
 			if ( matcher.matches() ) {
 				try {
-					email.setId( new BigInteger( matcher.group( 1 ) ) );
+					email = new Email( new BigInteger( matcher.group( 1 ) ) );
 				} catch ( NumberFormatException e ) {
 					throw new BadRequestException();
 				}
@@ -170,8 +162,6 @@ public class EmailServlet extends CommonHttpServlet {
 			
 			out.print( this.service.delete( req.getHeader( AppConstants.CLKIO_LOGIN_CODE ), new DeleteEmailRequest( email ) ).getMessage( accept ) );
 			resp.setStatus( HttpServletResponse.SC_OK );
-		} catch ( JsonParseException | JsonMappingException e ) {
-			resp.setStatus( HttpServletResponse.SC_BAD_REQUEST );
 		} catch ( DataBindingException e ) {
 			resp.setStatus( HttpServletResponse.SC_BAD_REQUEST );
 		} catch ( ResponseException e ) {

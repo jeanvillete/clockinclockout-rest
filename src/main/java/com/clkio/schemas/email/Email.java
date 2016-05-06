@@ -54,6 +54,11 @@ public class Email {
     	super();
     }
     
+    public Email( BigInteger id ) {
+    	super();
+    	this.id = id;
+    }
+    
     public Email( String emailAddress, String confirmationCode ) {
 		super();
 		this.emailAddress = emailAddress;
