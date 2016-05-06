@@ -76,7 +76,16 @@ public class Profile {
     @XmlElement(required = true)
     protected String expectedSaturday;
 
-    /**
+    public Profile() {
+    	super();
+    }
+    
+    public Profile( BigInteger id ) {
+		super();
+		this.id = id;
+	}
+
+	/**
      * Gets the value of the id property.
      * 
      * @return

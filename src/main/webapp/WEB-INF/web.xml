@@ -27,6 +27,7 @@
 			classpath:springframework/spring-ws-email.xml
 			classpath:springframework/spring-ws-login.xml
 			classpath:springframework/spring-ws-password.xml
+			classpath:springframework/spring-ws-adjusting.xml
 		</param-value>
 	</context-param>
 	<listener>
@@ -75,6 +76,16 @@
 		<url-pattern>/password/requestings</url-pattern>
 		<url-pattern>/password/requestings/*</url-pattern>
 		<url-pattern>/password/confirmations/*</url-pattern>
+	</servlet-mapping>
+	
+	<!-- adjusting -->
+	<servlet>
+		<servlet-name>adjustingServlet</servlet-name>
+		<servlet-class>com.clkio.web.AdjustingServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>adjustingServlet</servlet-name>
+		<url-pattern>/profile/*/adjustings</url-pattern>
 	</servlet-mapping>
 
 </web-app>

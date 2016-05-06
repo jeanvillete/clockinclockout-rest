@@ -36,7 +36,16 @@ public class ListAdjustingRequest {
     @XmlElement(required = true)
     protected Profile profile;
 
-    /**
+    public ListAdjustingRequest() {
+    	super();
+    }
+    
+    public ListAdjustingRequest( Profile profile ) {
+		super();
+		this.profile = profile;
+	}
+
+	/**
      * Gets the value of the profile property.
      * 
      * @return
