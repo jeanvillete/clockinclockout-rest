@@ -1,4 +1,4 @@
-*AdjustingBinding.insert( Adjusting )
+*AdjustingBinding.list()
 GET http://rest.clkio.com/profile/1/adjustings
 => responds =>
 200 OK
@@ -42,7 +42,7 @@ PUT http://rest.clkio.com/profile/1/adjustings/3
   "message" : ""
 }
 
-*AdjustingBinding.delete( Profile )
+*AdjustingBinding.delete( Adjusting )
 DELETE http://rest.clkio.com/profile/1/adjustings/3
 => responds =>
 200 OK
