@@ -35,7 +35,16 @@ public class UpdateManualEnteringReasonRequest {
     @XmlElement(required = true)
     protected Reason reason;
 
-    /**
+    public UpdateManualEnteringReasonRequest() {
+    	super();
+    }
+    
+    public UpdateManualEnteringReasonRequest( Reason reason ) {
+		super();
+		this.reason = reason;
+	}
+
+	/**
      * Gets the value of the reason property.
      * 
      * @return
