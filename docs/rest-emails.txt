@@ -47,7 +47,6 @@ POST http://rest.clkio.com/emails/confirmations/%242a%2410%24FstmG15nLiQCvMFXE4Y
 * EmailBinding.setEmailAsPrimary( Email )
 PUT http://rest.clkio.com/emails/28
 {
-  "emailAddress" : "myemail@email.com",
   "primary" : "true"
 }
 => responds =>
