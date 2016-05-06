@@ -47,7 +47,7 @@ public class AdjustingServlet extends CommonHttpServlet {
 			if ( accept == null ) throw new NotAcceptableException( "Header 'Accept' is mandatory and has to be either 'application/json' or 'application/xml'." );
 			resp.setContentType( accept.getValue() );
 
-			Matcher matcher = Pattern.compile( "^http.+\\/profile\\/(\\d+)\\/adjustings\\/?$" ).matcher( req.getRequestURL().toString() );
+			Matcher matcher = Pattern.compile( "^http.+\\/profiles\\/(\\d+)\\/adjustings\\/?$" ).matcher( req.getRequestURL().toString() );
 			if ( matcher.matches() ) {
 				BigInteger profileId;
 				try {
@@ -91,7 +91,7 @@ public class AdjustingServlet extends CommonHttpServlet {
 				adjusting = JAXB.unmarshal( req.getReader(), Adjusting.class );
 			else throw new IllegalStateException( "No valid value for header 'Content-Type'. contentType=[" + accept.getValue() + "]" );
 			
-			Matcher matcher = Pattern.compile( "^http.+\\/profile\\/(\\d+)\\/adjustings\\/?$" ).matcher( req.getRequestURL().toString() );
+			Matcher matcher = Pattern.compile( "^http.+\\/profiles\\/(\\d+)\\/adjustings\\/?$" ).matcher( req.getRequestURL().toString() );
 			if ( matcher.matches() ) {
 				BigInteger profileId;
 				try {
@@ -138,7 +138,7 @@ public class AdjustingServlet extends CommonHttpServlet {
 				adjusting = JAXB.unmarshal( req.getReader(), Adjusting.class );
 			else throw new IllegalStateException( "No valid value for header 'Content-Type'. contentType=[" + accept.getValue() + "]" );
 			
-			Matcher matcher = Pattern.compile( "^http.+\\/profile\\/(\\d+)\\/adjustings\\/(\\d+)\\/?$" ).matcher( req.getRequestURL().toString() );
+			Matcher matcher = Pattern.compile( "^http.+\\/profiles\\/(\\d+)\\/adjustings\\/(\\d+)\\/?$" ).matcher( req.getRequestURL().toString() );
 			if ( matcher.matches() ) {
 				BigInteger profileId, adjustingId;
 				try {
@@ -177,7 +177,7 @@ public class AdjustingServlet extends CommonHttpServlet {
 			accept = ContentType.parse( req.getHeader( "Accept" ) );
 			if ( accept == null ) throw new NotAcceptableException( "Header 'Accept' is mandatory and has to be either 'application/json' or 'application/xml'." );
 			resp.setContentType( accept.getValue() );
-			Matcher matcher = Pattern.compile( "^http.+\\/profile\\/(\\d+)\\/adjustings\\/(\\d+)\\/?$" ).matcher( req.getRequestURL().toString() );
+			Matcher matcher = Pattern.compile( "^http.+\\/profiles\\/(\\d+)\\/adjustings\\/(\\d+)\\/?$" ).matcher( req.getRequestURL().toString() );
 			if ( matcher.matches() ) {
 				BigInteger profileId, adjustingId;
 				try {

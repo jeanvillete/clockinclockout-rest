@@ -28,6 +28,7 @@
 			classpath:springframework/spring-ws-login.xml
 			classpath:springframework/spring-ws-password.xml
 			classpath:springframework/spring-ws-adjusting.xml
+			classpath:springframework/spring-ws-profile.xml
 		</param-value>
 	</context-param>
 	<listener>
@@ -78,6 +79,16 @@
 		<url-pattern>/password/confirmations/*</url-pattern>
 	</servlet-mapping>
 	
+	<!-- profile -->
+	<servlet>
+		<servlet-name>profileServlet</servlet-name>
+		<servlet-class>com.clkio.web.ProfileServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>profileServlet</servlet-name>
+		<url-pattern>/profiles</url-pattern>
+	</servlet-mapping>
+	
 	<!-- adjusting -->
 	<servlet>
 		<servlet-name>adjustingServlet</servlet-name>
@@ -85,8 +96,9 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>adjustingServlet</servlet-name>
-		<url-pattern>/profile/*/adjustings</url-pattern>
-		<url-pattern>/profile/*/adjustings/*</url-pattern>
+		<url-pattern>/profiles/*/adjustings</url-pattern>
+		<url-pattern>/profiles/*/adjustings/*</url-pattern>
 	</servlet-mapping>
+	
 
 </web-app>
