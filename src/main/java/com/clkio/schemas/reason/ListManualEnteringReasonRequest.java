@@ -36,7 +36,16 @@ public class ListManualEnteringReasonRequest {
     @XmlElement(required = true)
     protected Profile profile;
 
-    /**
+    public ListManualEnteringReasonRequest() {
+    	super();
+    }
+    
+    public ListManualEnteringReasonRequest( Profile profile ) {
+		super();
+		this.profile = profile;
+	}
+
+	/**
      * Gets the value of the profile property.
      * 
      * @return

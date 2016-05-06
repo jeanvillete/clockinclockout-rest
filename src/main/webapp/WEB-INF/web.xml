@@ -29,6 +29,7 @@
 			classpath:springframework/spring-ws-password.xml
 			classpath:springframework/spring-ws-adjusting.xml
 			classpath:springframework/spring-ws-profile.xml
+			classpath:springframework/spring-ws-reason.xml
 		</param-value>
 	</context-param>
 	<listener>
@@ -87,6 +88,7 @@
 	<servlet-mapping>
 		<servlet-name>profileServlet</servlet-name>
 		<url-pattern>/profiles</url-pattern>
+		<url-pattern>/profiles/*</url-pattern>
 	</servlet-mapping>
 	
 	<!-- adjusting -->
@@ -100,5 +102,15 @@
 		<url-pattern>/profiles/*/adjustings/*</url-pattern>
 	</servlet-mapping>
 	
+	<!-- reason -->
+	<servlet>
+		<servlet-name>reasonServlet</servlet-name>
+		<servlet-class>com.clkio.web.ReasonServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>reasonServlet</servlet-name>
+		<url-pattern>/profiles/*/reasons</url-pattern>
+		<url-pattern>/profiles/*/reasons/*</url-pattern>
+	</servlet-mapping>
 
 </web-app>

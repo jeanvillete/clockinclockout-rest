@@ -46,7 +46,6 @@ public class AdjustingServlet extends CommonHttpServlet {
 			accept = ContentType.parse( req.getHeader( "Accept" ) );
 			if ( accept == null ) throw new NotAcceptableException( "Header 'Accept' is mandatory and has to be either 'application/json' or 'application/xml'." );
 			resp.setContentType( accept.getValue() );
-
 			Matcher matcher = Pattern.compile( "^http.+\\/profiles\\/(\\d+)\\/adjustings\\/?$" ).matcher( req.getRequestURL().toString() );
 			if ( matcher.matches() ) {
 				BigInteger profileId;
