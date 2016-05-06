@@ -35,7 +35,16 @@ public class UpdateProfileRequest {
     @XmlElement(required = true)
     protected Profile profile;
 
-    /**
+    public UpdateProfileRequest() {
+    	super();
+    }
+    
+    public UpdateProfileRequest( Profile profile ) {
+		super();
+		this.profile = profile;
+	}
+
+	/**
      * Gets the value of the profile property.
      * 
      * @return
