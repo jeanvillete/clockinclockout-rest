@@ -23,7 +23,7 @@ GET http://rest.clkio.com/profiles/1/timecard/ | GET http://rest.clkio.com/profi
 }
 
 *TimeCardBinding.punchClock( Profile, Timestamp )
-PATCH http://rest.clkio.com/profiles/1/timecard
+POST http://rest.clkio.com/profiles/1/timecard
 {
   "timestamp" : "2016-04-0112:00"
 }
