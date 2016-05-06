@@ -44,7 +44,18 @@ public class ResetPasswordRequest {
     @XmlElement(required = true)
     protected String newPassword;
 
-    /**
+    public ResetPasswordRequest() {
+    	super();
+    }
+    
+    public ResetPasswordRequest(String confirmationCode, User user, String newPassword) {
+		super();
+		this.confirmationCode = confirmationCode;
+		this.user = user;
+		this.newPassword = newPassword;
+	}
+
+	/**
      * Gets the value of the confirmationCode property.
      * 
      * @return

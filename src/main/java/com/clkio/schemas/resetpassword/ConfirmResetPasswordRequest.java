@@ -40,7 +40,17 @@ public class ConfirmResetPasswordRequest {
     @XmlElement(required = true)
     protected User user;
 
-    /**
+    public ConfirmResetPasswordRequest() {
+    	super();
+    }
+    
+    public ConfirmResetPasswordRequest( String requestCode, User user ) {
+		super();
+		this.requestCode = requestCode;
+		this.user = user;
+	}
+
+	/**
      * Gets the value of the requestCode property.
      * 
      * @return
