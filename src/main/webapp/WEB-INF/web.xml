@@ -30,6 +30,7 @@
 			classpath:springframework/spring-ws-adjusting.xml
 			classpath:springframework/spring-ws-profile.xml
 			classpath:springframework/spring-ws-reason.xml
+			classpath:springframework/spring-ws-timecard.xml
 		</param-value>
 	</context-param>
 	<listener>
@@ -106,6 +107,16 @@
 		<url-pattern>/reasons/*</url-pattern>
 	</servlet-mapping>
 	
+	<!-- timecard -->
+	<servlet>
+		<servlet-name>timeCardServlet</servlet-name>
+		<servlet-class>com.clkio.web.TimeCardServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>timeCardServlet</servlet-name>
+		<url-pattern>/timecard/*</url-pattern>
+	</servlet-mapping>
+	
 	<!-- filter for proper internal redirection/forwarding -->
 	<filter>
 		<filter-name>customDispatcher</filter-name>
@@ -114,8 +125,9 @@
 			<param-name>custom-dispatcher-forward</param-name>
 			<param-value>
 				<![CDATA[
-					^.+(\/profiles\/d+)(\/adjustings\/?)(\/d+\/?)?$ => $2$3$1
-					^.+(\/profiles\/d+)(\/reasons\/?)(\/d+\/?)?$ => $2$3$1
+					^.+(\/profiles\/\d+)(\/adjustings\/?)(\d+\/?)?$ => $2$3$1
+					^.+(\/profiles\/\d+)(\/reasons\/?)(\d+\/?)?$ => $2$3$1
+					^.+(\/profiles\/\d+)(\/timecard\/?)(\d{4}\-\d{2})?\/?$ => $2$3$1
 				]]>
 			</param-value>
 		</init-param>

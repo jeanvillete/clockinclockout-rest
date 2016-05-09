@@ -40,7 +40,17 @@ public class GetTimeCardRequest {
     @XmlElement(required = true)
     protected String month;
 
-    /**
+    public GetTimeCardRequest() {
+    	super();
+    }
+    
+    public GetTimeCardRequest( Profile profile, String month ) {
+		super();
+		this.profile = profile;
+		this.month = month;
+	}
+
+	/**
      * Gets the value of the profile property.
      * 
      * @return
