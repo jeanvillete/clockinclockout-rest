@@ -54,7 +54,6 @@
 	<servlet-mapping>
 		<servlet-name>emailServlet</servlet-name>
 		<url-pattern>/emails/*</url-pattern>
-		<url-pattern>/emails/confirmations/*</url-pattern>
 	</servlet-mapping>
 	
 	<!-- login -->
@@ -74,8 +73,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>passwordServlet</servlet-name>
-		<url-pattern>/password/requestings/*</url-pattern>
-		<url-pattern>/password/confirmations/*</url-pattern>
+		<url-pattern>/password/*</url-pattern>
 	</servlet-mapping>
 
 	<!-- profile -->
@@ -107,5 +105,24 @@
 		<servlet-name>reasonServlet</servlet-name>
 		<url-pattern>/reasons/*</url-pattern>
 	</servlet-mapping>
+	
+	<!-- filter for proper internal redirection/forwarding -->
+	<filter>
+		<filter-name>customDispatcher</filter-name>
+		<filter-class>com.clkio.web.filter.CustomDispatcherFilter</filter-class>
+		<init-param>
+			<param-name>custom-dispatcher-forward</param-name>
+			<param-value>
+				<![CDATA[
+					^.+(\/profiles\/d+)(\/adjustings\/?)(\/d+\/?)?$ => $2$3$1
+					^.+(\/profiles\/d+)(\/reasons\/?)(\/d+\/?)?$ => $2$3$1
+				]]>
+			</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>customDispatcher</filter-name>
+		<url-pattern>/profiles/*</url-pattern>
+	</filter-mapping>
 	
 </web-app>
