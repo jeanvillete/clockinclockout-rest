@@ -36,7 +36,16 @@ public class GetTotalTimeRequest {
     @XmlElement(required = true)
     protected Profile profile;
 
-    /**
+    public GetTotalTimeRequest() {
+    	super();
+    }
+    
+    public GetTotalTimeRequest( Profile profile ) {
+		super();
+		this.profile = profile;
+	}
+
+	/**
      * Gets the value of the profile property.
      * 
      * @return

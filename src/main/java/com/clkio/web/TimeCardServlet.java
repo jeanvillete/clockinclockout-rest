@@ -12,10 +12,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.DataBindingException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 
 import com.clkio.schemas.common.Response;
 import com.clkio.schemas.profile.Profile;
 import com.clkio.schemas.timecard.GetTimeCardRequest;
+import com.clkio.schemas.timecard.GetTotalTimeMonthlyRequest;
+import com.clkio.schemas.timecard.GetTotalTimeRequest;
 import com.clkio.web.constants.AppConstants;
 import com.clkio.web.enums.ContentType;
 import com.clkio.web.exception.BadRequestException;
@@ -51,6 +54,18 @@ public class TimeCardServlet extends CommonHttpServlet {
 					throw new BadRequestException( "Invalid value provided for 'profileId'" );
 				}
 				response = this.service.getTimeCard( req.getHeader( AppConstants.CLKIO_LOGIN_CODE ), new GetTimeCardRequest( new Profile( profileId ), yearMonth ) );
+			} else if ( ( matcher = Pattern.compile( "^.+\\/timecard\\/totaltime\\/(\\d{4}\\-\\d{2})?\\/?profiles\\/(\\d+)\\/?$" ).matcher( req.getRequestURL().toString() ) ).matches() ) {
+				String yearMonth = matcher.group( 1 );
+				BigInteger profileId;
+				try {
+					profileId = new BigInteger( matcher.group( 2 ) );
+				} catch ( NumberFormatException e) {
+					throw new BadRequestException( "Invalid value provided for 'profileId'" );
+				}
+				if ( StringUtils.hasText( yearMonth ) )
+					response = this.service.getTotalTimeMonthly( req.getHeader( AppConstants.CLKIO_LOGIN_CODE ), new GetTotalTimeMonthlyRequest( new Profile( profileId ), yearMonth ) );
+				else 
+					response = this.service.getTotalTime( req.getHeader( AppConstants.CLKIO_LOGIN_CODE ), new GetTotalTimeRequest( new Profile( profileId ) ) );
 			} else throw new BadRequestException();
 			
 			out.print( response.getMessage( accept ) );

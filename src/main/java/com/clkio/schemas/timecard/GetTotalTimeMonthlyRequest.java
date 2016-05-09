@@ -40,7 +40,17 @@ public class GetTotalTimeMonthlyRequest {
     @XmlElement(required = true)
     protected String month;
 
-    /**
+    public GetTotalTimeMonthlyRequest() {
+    	super();
+    }
+    
+    public GetTotalTimeMonthlyRequest( Profile profile, String month ) {
+		super();
+		this.profile = profile;
+		this.month = month;
+	}
+
+	/**
      * Gets the value of the profile property.
      * 
      * @return

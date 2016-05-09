@@ -128,6 +128,7 @@
 					^.+(\/profiles\/\d+)(\/adjustings\/?)(\d+\/?)?$ => $2$3$1
 					^.+(\/profiles\/\d+)(\/reasons\/?)(\d+\/?)?$ => $2$3$1
 					^.+(\/profiles\/\d+)(\/timecard\/?)(\d{4}\-\d{2})?\/?$ => $2$3$1
+					^.+(\/profiles\/\d+)(\/timecard\/totaltime\/?)(\d{4}\-\d{2})?\/?$ => $2$3$1
 				]]>
 			</param-value>
 		</init-param>
