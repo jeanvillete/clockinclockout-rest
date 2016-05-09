@@ -46,7 +46,7 @@ public class AdjustingServlet extends CommonHttpServlet {
 			accept = ContentType.parse( req.getHeader( "Accept" ) );
 			if ( accept == null ) throw new NotAcceptableException( "Header 'Accept' is mandatory and has to be either 'application/json' or 'application/xml'." );
 			resp.setContentType( accept.getValue() );
-			Matcher matcher = Pattern.compile( "^http.+\\/profiles\\/(\\d+)\\/adjustings\\/?$" ).matcher( req.getRequestURL().toString() );
+			Matcher matcher = Pattern.compile( "^http.+\\/adjustings\\/profiles\\/(\\d+)\\/?$" ).matcher( req.getRequestURL().toString() );
 			if ( matcher.matches() ) {
 				BigInteger profileId;
 				try {
@@ -90,7 +90,7 @@ public class AdjustingServlet extends CommonHttpServlet {
 				adjusting = JAXB.unmarshal( req.getReader(), Adjusting.class );
 			else throw new IllegalStateException( "No valid value for header 'Content-Type'. contentType=[" + accept.getValue() + "]" );
 			
-			Matcher matcher = Pattern.compile( "^http.+\\/profiles\\/(\\d+)\\/adjustings\\/?$" ).matcher( req.getRequestURL().toString() );
+			Matcher matcher = Pattern.compile( "^http.+\\/adjustings\\/profiles\\/(\\d+)\\/?$" ).matcher( req.getRequestURL().toString() );
 			if ( matcher.matches() ) {
 				try {
 					adjusting.setProfile( new Profile( new BigInteger( matcher.group( 1 ) ) ) );
@@ -135,11 +135,11 @@ public class AdjustingServlet extends CommonHttpServlet {
 				adjusting = JAXB.unmarshal( req.getReader(), Adjusting.class );
 			else throw new IllegalStateException( "No valid value for header 'Content-Type'. contentType=[" + accept.getValue() + "]" );
 			
-			Matcher matcher = Pattern.compile( "^http.+\\/profiles\\/(\\d+)\\/adjustings\\/(\\d+)\\/?$" ).matcher( req.getRequestURL().toString() );
+			Matcher matcher = Pattern.compile( "^http.+\\/adjustings\\/(\\d+)\\/profiles\\/(\\d+)\\/?$" ).matcher( req.getRequestURL().toString() );
 			if ( matcher.matches() ) {
 				try {
-					adjusting.setProfile( new Profile( new BigInteger( matcher.group( 1 ) ) ) );
-					adjusting.setId( new BigInteger( matcher.group( 2 ) ) );
+					adjusting.setProfile( new Profile( new BigInteger( matcher.group( 2 ) ) ) );
+					adjusting.setId( new BigInteger( matcher.group( 1 ) ) );
 				} catch ( NumberFormatException e) {
 					throw new BadRequestException( "Invalid value provided for 'profileId' and/or 'adjustingId'" );
 				}
@@ -172,11 +172,11 @@ public class AdjustingServlet extends CommonHttpServlet {
 			if ( accept == null ) throw new NotAcceptableException( "Header 'Accept' is mandatory and has to be either 'application/json' or 'application/xml'." );
 			resp.setContentType( accept.getValue() );
 			Adjusting adjusting = null;
-			Matcher matcher = Pattern.compile( "^http.+\\/profiles\\/(\\d+)\\/adjustings\\/(\\d+)\\/?$" ).matcher( req.getRequestURL().toString() );
+			Matcher matcher = Pattern.compile( "^http.+\\/adjustings\\/(\\d+)\\/profiles\\/(\\d+)\\/?$" ).matcher( req.getRequestURL().toString() );
 			if ( matcher.matches() ) {
 				try {
-					adjusting = new Adjusting( new BigInteger( matcher.group( 2 ) ) );
-					adjusting.setProfile( new Profile( new BigInteger( matcher.group( 1 ) ) ) );
+					adjusting = new Adjusting( new BigInteger( matcher.group( 1 ) ) );
+					adjusting.setProfile( new Profile( new BigInteger( matcher.group( 2 ) ) ) );
 				} catch ( NumberFormatException e) {
 					throw new BadRequestException( "Invalid value provided for 'profileId' and/or 'adjustingId'" );
 				}

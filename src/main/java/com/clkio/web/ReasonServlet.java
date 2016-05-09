@@ -46,7 +46,7 @@ public class ReasonServlet extends CommonHttpServlet {
 			accept = ContentType.parse( req.getHeader( "Accept" ) );
 			if ( accept == null ) throw new NotAcceptableException( "Header 'Accept' is mandatory and has to be either 'application/json' or 'application/xml'." );
 			resp.setContentType( accept.getValue() );
-			Matcher matcher = Pattern.compile( "^http.+\\/profiles\\/(\\d+)\\/reasons\\/?$" ).matcher( req.getRequestURL().toString() );
+			Matcher matcher = Pattern.compile( "^http.+\\/reasons\\/profiles\\/(\\d+)\\/?$" ).matcher( req.getRequestURL().toString() );
 			if ( matcher.matches() ) {
 				BigInteger profileId;
 				try {
@@ -90,7 +90,7 @@ public class ReasonServlet extends CommonHttpServlet {
 				reason = JAXB.unmarshal( req.getReader(), Reason.class );
 			else throw new IllegalStateException( "No valid value for header 'Content-Type'. contentType=[" + accept.getValue() + "]" );
 			
-			Matcher matcher = Pattern.compile( "^http.+\\/profiles\\/(\\d+)\\/reasons\\/?$" ).matcher( req.getRequestURL().toString() );
+			Matcher matcher = Pattern.compile( "^http.+\\/reasons\\/profiles\\/(\\d+)\\/?$" ).matcher( req.getRequestURL().toString() );
 			if ( matcher.matches() ) {
 				try {
 					reason.setProfile( new Profile( new BigInteger( matcher.group( 1 ) ) ) );
@@ -135,11 +135,11 @@ public class ReasonServlet extends CommonHttpServlet {
 				reason = JAXB.unmarshal( req.getReader(), Reason.class );
 			else throw new IllegalStateException( "No valid value for header 'Content-Type'. contentType=[" + accept.getValue() + "]" );
 			
-			Matcher matcher = Pattern.compile( "^http.+\\/profiles\\/(\\d+)\\/reasons\\/(\\d+)\\/?$" ).matcher( req.getRequestURL().toString() );
+			Matcher matcher = Pattern.compile( "^http.+\\/reasons\\/(\\d+)\\/profiles\\/(\\d+)\\/?$" ).matcher( req.getRequestURL().toString() );
 			if ( matcher.matches() ) {
 				try {
-					reason.setProfile( new Profile( new BigInteger( matcher.group( 1 ) ) ) );
-					reason.setId( new BigInteger( matcher.group( 2 ) ) );
+					reason.setProfile( new Profile( new BigInteger( matcher.group( 2 ) ) ) );
+					reason.setId( new BigInteger( matcher.group( 1 ) ) );
 				} catch ( NumberFormatException e) {
 					throw new BadRequestException( "Invalid value provided for 'profileId'" );
 				}
@@ -173,11 +173,11 @@ public class ReasonServlet extends CommonHttpServlet {
 			resp.setContentType( accept.getValue() );
 
 			Reason reason = null;
-			Matcher matcher = Pattern.compile( "^http.+\\/profiles\\/(\\d+)\\/reasons\\/(\\d+)\\/?$" ).matcher( req.getRequestURL().toString() );
+			Matcher matcher = Pattern.compile( "^http.+\\/reasons\\/(\\d+)\\/profiles\\/(\\d+)\\/?$" ).matcher( req.getRequestURL().toString() );
 			if ( matcher.matches() ) {
 				try {
-					reason = new Reason( new BigInteger( matcher.group( 2 ) ) );
-					reason.setProfile( new Profile( new BigInteger( matcher.group( 1 ) ) ) );
+					reason = new Reason( new BigInteger( matcher.group( 1 ) ) );
+					reason.setProfile( new Profile( new BigInteger( matcher.group( 2 ) ) ) );
 				} catch ( NumberFormatException e) {
 					throw new BadRequestException( "Invalid value provided for 'profileId'" );
 				}

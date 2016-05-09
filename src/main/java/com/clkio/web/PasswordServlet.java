@@ -94,14 +94,13 @@ public class PasswordServlet extends CommonHttpServlet {
 			else throw new IllegalStateException( "No valid value for header 'Content-Type'. contentType=[" + accept.getValue() + "]" );
 			
 			Response response = null;
-			Matcher requestings = Pattern.compile( "^http.+\\/requestings\\/?(.*)$" ).matcher( req.getRequestURL().toString() );
-			Matcher confirmations = Pattern.compile( "^http.+\\/confirmations\\/?(.*)$" ).matcher( req.getRequestURL().toString() );
-			if ( requestings.matches() ) {
-				String requestCode = requestings.group( 1 );
+			Matcher matcher = null;
+			if ( ( matcher = Pattern.compile( "^http.+\\/requestings\\/?(.*)$" ).matcher( req.getRequestURL().toString() ) ).matches() ) {
+				String requestCode = matcher.group( 1 );
 				if ( StringUtils.isEmpty( requestCode ) ) throw new BadRequestException( "No valid value provided for 'requestCode'" );
 				response = this.service.confirmResetPassword( new ConfirmResetPasswordRequest( URLDecoder.decode( requestCode, "UTF-8" ), user ) );
-			} else if ( confirmations.matches() ) {
-				String confirmationCode = requestings.group( 1 );
+			} else if ( ( matcher = Pattern.compile( "^http.+\\/confirmations\\/?(.*)$" ).matcher( req.getRequestURL().toString() ) ).matches() ) {
+				String confirmationCode = matcher.group( 1 );
 				if ( StringUtils.isEmpty( confirmationCode ) ) throw new BadRequestException( "No valid value provided for 'confirmationCode'" );
 				response = this.service.resetPassword( new ResetPasswordRequest( URLDecoder.decode( confirmationCode, "UTF-8" ), user, user.getPassword() ) );
 			} else throw new BadRequestException();
