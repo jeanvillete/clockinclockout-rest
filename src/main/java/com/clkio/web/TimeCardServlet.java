@@ -17,11 +17,13 @@ import org.springframework.util.StringUtils;
 
 import com.clkio.schemas.clockinclockout.Clockinclockout;
 import com.clkio.schemas.common.Response;
+import com.clkio.schemas.manualentering.ManualEntering;
 import com.clkio.schemas.profile.Profile;
 import com.clkio.schemas.timecard.GetTimeCardRequest;
 import com.clkio.schemas.timecard.GetTotalTimeMonthlyRequest;
 import com.clkio.schemas.timecard.GetTotalTimeRequest;
 import com.clkio.schemas.timecard.InsertClockinClockoutRequest;
+import com.clkio.schemas.timecard.InsertManualEnteringRequest;
 import com.clkio.schemas.timecard.PunchClockRequest;
 import com.clkio.web.constants.AppConstants;
 import com.clkio.web.enums.ContentType;
@@ -126,6 +128,17 @@ public class TimeCardServlet extends CommonHttpServlet {
 					clockinClockout = JAXB.unmarshal( req.getReader(), Clockinclockout.class );
 				try {
 					response = this.service.insertClockinClockout( req.getHeader( AppConstants.CLKIO_LOGIN_CODE ), new InsertClockinClockoutRequest( new Profile( new BigInteger( matcher.group( 1 ) ) ), clockinClockout ) );
+				} catch ( NumberFormatException e) {
+					throw new BadRequestException( "Invalid value provided for 'profileId'" );
+				}
+			} else if ( ( matcher = Pattern.compile( "^.+\\/timecard\\/manualentering\\/profiles\\/(\\d+)\\/?$" ).matcher( req.getRequestURL().toString() ) ).matches() ) {
+				ManualEntering manualEntering = null;
+				if ( contentType.equals( ContentType.APPLICATION_JSON ) )
+					manualEntering = new ObjectMapper().readValue( req.getReader(), ManualEntering.class );
+				else if ( contentType.equals( ContentType.APPLICATION_XML ) )
+					manualEntering = JAXB.unmarshal( req.getReader(), ManualEntering.class );
+				try {
+					response = this.service.insertManualEntering( req.getHeader( AppConstants.CLKIO_LOGIN_CODE ), new InsertManualEnteringRequest( new Profile( new BigInteger( matcher.group( 1 ) ) ), manualEntering ) );
 				} catch ( NumberFormatException e) {
 					throw new BadRequestException( "Invalid value provided for 'profileId'" );
 				}

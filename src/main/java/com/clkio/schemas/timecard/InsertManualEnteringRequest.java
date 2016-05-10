@@ -41,7 +41,17 @@ public class InsertManualEnteringRequest {
     @XmlElement(required = true)
     protected ManualEntering manualEntering;
 
-    /**
+    public InsertManualEnteringRequest() {
+    	super();
+    }
+    
+    public InsertManualEnteringRequest( Profile profile, ManualEntering manualEntering ) {
+		super();
+		this.profile = profile;
+		this.manualEntering = manualEntering;
+	}
+
+	/**
      * Gets the value of the profile property.
      * 
      * @return
