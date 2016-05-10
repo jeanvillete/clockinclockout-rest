@@ -15,11 +15,13 @@ import javax.xml.bind.JAXB;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 
+import com.clkio.schemas.clockinclockout.Clockinclockout;
 import com.clkio.schemas.common.Response;
 import com.clkio.schemas.profile.Profile;
 import com.clkio.schemas.timecard.GetTimeCardRequest;
 import com.clkio.schemas.timecard.GetTotalTimeMonthlyRequest;
 import com.clkio.schemas.timecard.GetTotalTimeRequest;
+import com.clkio.schemas.timecard.InsertClockinClockoutRequest;
 import com.clkio.schemas.timecard.PunchClockRequest;
 import com.clkio.web.constants.AppConstants;
 import com.clkio.web.enums.ContentType;
@@ -112,10 +114,21 @@ public class TimeCardServlet extends CommonHttpServlet {
 							JAXB.unmarshal( req.getReader(), PunchClockRequest.class );
 				try {
 					punchClockRequest.setProfile( new Profile( new BigInteger( matcher.group( 1 ) ) ) );
+					response = this.service.punchClock( req.getHeader( AppConstants.CLKIO_LOGIN_CODE ), punchClockRequest );
 				} catch ( NumberFormatException e) {
 					throw new BadRequestException( "Invalid value provided for 'profileId'" );
 				}
-				response = this.service.punchClock( req.getHeader( AppConstants.CLKIO_LOGIN_CODE ), punchClockRequest );
+			} else if ( ( matcher = Pattern.compile( "^.+\\/timecard\\/clockinclockout\\/profiles\\/(\\d+)\\/?$" ).matcher( req.getRequestURL().toString() ) ).matches() ) {
+				Clockinclockout clockinClockout = null;
+				if ( contentType.equals( ContentType.APPLICATION_JSON ) )
+					clockinClockout = new ObjectMapper().readValue( req.getReader(), Clockinclockout.class );
+				else if ( contentType.equals( ContentType.APPLICATION_XML ) )
+					clockinClockout = JAXB.unmarshal( req.getReader(), Clockinclockout.class );
+				try {
+					response = this.service.insertClockinClockout( req.getHeader( AppConstants.CLKIO_LOGIN_CODE ), new InsertClockinClockoutRequest( new Profile( new BigInteger( matcher.group( 1 ) ) ), clockinClockout ) );
+				} catch ( NumberFormatException e) {
+					throw new BadRequestException( "Invalid value provided for 'profileId'" );
+				}
 			} else throw new BadRequestException();
 			
 			out.print( response.getMessage( accept ) );

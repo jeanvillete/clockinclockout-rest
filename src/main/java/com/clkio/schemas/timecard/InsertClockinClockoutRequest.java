@@ -41,7 +41,17 @@ public class InsertClockinClockoutRequest {
     @XmlElement(required = true)
     protected Clockinclockout clockinclockout;
 
-    /**
+    public InsertClockinClockoutRequest() {
+    	super();
+    }
+    
+    public InsertClockinClockoutRequest( Profile profile, Clockinclockout clockinclockout ) {
+		super();
+		this.profile = profile;
+		this.clockinclockout = clockinclockout;
+	}
+
+	/**
      * Gets the value of the profile property.
      * 
      * @return
