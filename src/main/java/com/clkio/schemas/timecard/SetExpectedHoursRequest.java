@@ -44,7 +44,18 @@ public class SetExpectedHoursRequest {
     @XmlElement(required = true)
     protected String expectedHours;
 
-    /**
+    public SetExpectedHoursRequest() {
+    	super();
+    }
+    
+    public SetExpectedHoursRequest( Profile profile, String date, String expectedHours ) {
+		super();
+		this.profile = profile;
+		this.date = date;
+		this.expectedHours = expectedHours;
+	}
+
+	/**
      * Gets the value of the profile property.
      * 
      * @return

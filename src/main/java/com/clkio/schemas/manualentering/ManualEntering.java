@@ -53,7 +53,16 @@ public class ManualEntering
     @XmlElement(required = true)
     protected Day day;
 
-    /**
+    public ManualEntering() {
+    	super();
+    }
+    
+    public ManualEntering( BigInteger id ) {
+		super();
+		this.id = id;
+	}
+
+	/**
      * Gets the value of the id property.
      * 
      * @return

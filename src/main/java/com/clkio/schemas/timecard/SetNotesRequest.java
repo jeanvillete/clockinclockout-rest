@@ -44,7 +44,18 @@ public class SetNotesRequest {
     @XmlElement(required = true)
     protected String text;
 
-    /**
+    public SetNotesRequest() {
+    	super();
+    }
+    
+    public SetNotesRequest( Profile profile, String date, String text ) {
+		super();
+		this.profile = profile;
+		this.date = date;
+		this.text = text;
+	}
+
+	/**
      * Gets the value of the profile property.
      * 
      * @return

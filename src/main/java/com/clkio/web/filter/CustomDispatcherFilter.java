@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 
 public class CustomDispatcherFilter implements Filter {
 
-	private static final Map< String, String > mappings = new HashMap< String, String >();
+	private Map< String, String > mappings = new HashMap< String, String >();
 	
 	@Override
 	public void init( FilterConfig filterConfig ) throws ServletException {

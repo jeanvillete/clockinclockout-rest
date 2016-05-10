@@ -47,7 +47,16 @@ public class Clockinclockout
     @XmlElement(required = true)
     protected String clockout;
 
-    /**
+    public Clockinclockout() {
+    	super();
+    }
+    
+    public Clockinclockout( BigInteger id ) {
+		super();
+		this.id = id;
+	}
+
+	/**
      * Gets the value of the id property.
      * 
      * @return

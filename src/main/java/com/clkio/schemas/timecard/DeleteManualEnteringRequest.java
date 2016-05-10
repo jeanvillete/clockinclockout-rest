@@ -41,7 +41,17 @@ public class DeleteManualEnteringRequest {
     @XmlElement(required = true)
     protected ManualEntering manualEntering;
 
-    /**
+    public DeleteManualEnteringRequest() {
+    	super();
+    }
+    
+    public DeleteManualEnteringRequest( Profile profile, ManualEntering manualEntering ) {
+		super();
+		this.profile = profile;
+		this.manualEntering = manualEntering;
+	}
+
+	/**
      * Gets the value of the profile property.
      * 
      * @return

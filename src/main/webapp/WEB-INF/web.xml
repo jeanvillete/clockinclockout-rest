@@ -117,28 +117,96 @@
 		<url-pattern>/timecard/*</url-pattern>
 	</servlet-mapping>
 	
-	<!-- filter for proper internal redirection/forwarding -->
+	<!-- totaltime -->
+	<servlet>
+		<servlet-name>totalTimeServlet</servlet-name>
+		<servlet-class>com.clkio.web.TotalTimeServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>totalTimeServlet</servlet-name>
+		<url-pattern>/totaltime/*</url-pattern>
+	</servlet-mapping>
+	
+	<!-- clockinclockout -->
+	<servlet>
+		<servlet-name>clockinClockoutServlet</servlet-name>
+		<servlet-class>com.clkio.web.ClockinClockoutServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>clockinClockoutServlet</servlet-name>
+		<url-pattern>/clockinclockout/*</url-pattern>
+	</servlet-mapping>
+	
+	<!-- manualentering -->
+	<servlet>
+		<servlet-name>manualEnteringServlet</servlet-name>
+		<servlet-class>com.clkio.web.ManualEnteringServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>manualEnteringServlet</servlet-name>
+		<url-pattern>/manualentering/*</url-pattern>
+	</servlet-mapping>
+	
+	<!-- expectedhours -->
+	<servlet>
+		<servlet-name>expectedHoursServlet</servlet-name>
+		<servlet-class>com.clkio.web.ExpectedHoursServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>expectedHoursServlet</servlet-name>
+		<url-pattern>/expectedhours/*</url-pattern>
+	</servlet-mapping>
+	
+	<!-- notes -->
+	<servlet>
+		<servlet-name>notesServlet</servlet-name>
+		<servlet-class>com.clkio.web.NotesServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>notesServlet</servlet-name>
+		<url-pattern>/notes/*</url-pattern>
+	</servlet-mapping>
+	
+	<!-- profiles filtering for proper internal redirection/forwarding -->
 	<filter>
-		<filter-name>customDispatcher</filter-name>
+		<filter-name>profilesCustomDispatcher</filter-name>
 		<filter-class>com.clkio.web.filter.CustomDispatcherFilter</filter-class>
 		<init-param>
 			<param-name>custom-dispatcher-forward</param-name>
 			<param-value>
 				<![CDATA[
-					^.+(\/profiles\/\d+)(\/adjustings\/?)(\d+\/?)?$ => $2$3$1
-					^.+(\/profiles\/\d+)(\/reasons\/?)(\d+\/?)?$ => $2$3$1
-					^.+(\/profiles\/\d+)(\/timecard\/?)$ => $2$1
-					^.+(\/profiles\/\d+)(\/timecard\/?)(\d{4}\-\d{2})?\/?$ => $2$3$1
-					^.+(\/profiles\/\d+)(\/timecard\/totaltime\/?)(\d{4}\-\d{2})?\/?$ => $2$3$1
-					^.+(\/profiles\/\d+)(\/timecard\/clockinclockout\/?)(\d+\/?)?$ => $2$3$1
-					^.+(\/profiles\/\d+)(\/timecard\/manualentering\/?)(\d+\/?)?$ => $2$3$1
+					^.+(\/profiles\/\d+)(\/adjustings.*)$ => $2$1
+					^.+(\/profiles\/\d+)(\/reasons.*)$ => $2$1
+					^.+(\/profiles\/\d+)(\/timecard.*)$ => $2$1
 				]]>
 			</param-value>
 		</init-param>
 	</filter>
 	<filter-mapping>
-		<filter-name>customDispatcher</filter-name>
+		<filter-name>profilesCustomDispatcher</filter-name>
 		<url-pattern>/profiles/*</url-pattern>
+	</filter-mapping>
+	
+	<!-- timecard filtering for proper internal redirection/forwarding -->
+	<filter>
+		<filter-name>timeCardCustomDispatcher</filter-name>
+		<filter-class>com.clkio.web.filter.CustomDispatcherFilter</filter-class>
+		<init-param>
+			<param-name>custom-dispatcher-forward</param-name>
+			<param-value>
+				<![CDATA[
+					^.+(\/timecard\/\d+)(\/totaltime.*)$ => $2
+					^.+(\/timecard\/\d+)(\/clockinclockout.*)$ => $2
+					^.+(\/timecard\/\d+)(\/manualentering.*)$ => $2
+					^.+(\/timecard\/\d+)(\/expectedhours.*)$ => $2
+					^.+(\/timecard\/\d+)(\/notes.*)$ => $2
+				]]>
+			</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>timeCardCustomDispatcher</filter-name>
+		<url-pattern>/timecard/*</url-pattern>
 	</filter-mapping>
 	
 </web-app>

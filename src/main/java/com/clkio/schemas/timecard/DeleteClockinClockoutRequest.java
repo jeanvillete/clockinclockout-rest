@@ -41,7 +41,17 @@ public class DeleteClockinClockoutRequest {
     @XmlElement(required = true)
     protected Clockinclockout clockinclockout;
 
-    /**
+    public DeleteClockinClockoutRequest() {
+    	super();
+    }
+    
+    public DeleteClockinClockoutRequest( Profile profile, Clockinclockout clockinclockout ) {
+		super();
+		this.profile = profile;
+		this.clockinclockout = clockinclockout;
+	}
+
+	/**
      * Gets the value of the profile property.
      * 
      * @return

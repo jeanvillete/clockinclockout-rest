@@ -41,6 +41,16 @@ public class UpdateClockinClockoutRequest {
     @XmlElement(required = true)
     protected Clockinclockout clockinclockout;
 
+    public UpdateClockinClockoutRequest() {
+    	super();
+    }
+    
+    public UpdateClockinClockoutRequest( Profile profile, Clockinclockout clockinclockout ) {
+		super();
+		this.profile = profile;
+		this.clockinclockout = clockinclockout;
+	}
+
     /**
      * Gets the value of the profile property.
      * 
