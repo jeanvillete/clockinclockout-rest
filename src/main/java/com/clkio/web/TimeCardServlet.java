@@ -114,10 +114,10 @@ public class TimeCardServlet extends CommonHttpServlet {
 							JAXB.unmarshal( req.getReader(), PunchClockRequest.class );
 				try {
 					punchClockRequest.setProfile( new Profile( new BigInteger( matcher.group( 1 ) ) ) );
-					response = this.service.punchClock( req.getHeader( AppConstants.CLKIO_LOGIN_CODE ), punchClockRequest );
 				} catch ( NumberFormatException e) {
 					throw new BadRequestException( "Invalid value provided for 'profileId'" );
 				}
+				response = this.service.punchClock( req.getHeader( AppConstants.CLKIO_LOGIN_CODE ), punchClockRequest );
 			} else if ( ( matcher = Pattern.compile( "^.+\\/timecard\\/clockinclockout\\/profiles\\/(\\d+)\\/?$" ).matcher( req.getRequestURL().toString() ) ).matches() ) {
 				Clockinclockout clockinClockout = null;
 				if ( contentType.equals( ContentType.APPLICATION_JSON ) )
