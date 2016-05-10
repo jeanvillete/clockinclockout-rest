@@ -40,7 +40,17 @@ public class PunchClockRequest {
     @XmlElement(required = true)
     protected String timestamp;
 
-    /**
+    public PunchClockRequest() {
+    	super();
+    }
+    
+    public PunchClockRequest( Profile profile, String timestamp ) {
+		super();
+		this.profile = profile;
+		this.timestamp = timestamp;
+	}
+
+	/**
      * Gets the value of the profile property.
      * 
      * @return
