@@ -53,7 +53,7 @@ public class TotalTimeServlet extends CommonHttpServlet {
 				
 				out.print( ( StringUtils.hasText( yearMonth ) ?
 					this.service.getTotalTimeMonthly( req.getHeader( AppConstants.CLKIO_LOGIN_CODE ), new GetTotalTimeMonthlyRequest( profile, yearMonth ) ) :
-					this.service.getTotalTime( req.getHeader( AppConstants.CLKIO_LOGIN_CODE ), new GetTotalTimeRequest( profile ) ).getMessage( accept ) ) );
+					this.service.getTotalTime( req.getHeader( AppConstants.CLKIO_LOGIN_CODE ), new GetTotalTimeRequest( profile ) ) ).getMessage( accept ) );
 				resp.setStatus( HttpServletResponse.SC_OK );
 			} else throw new BadRequestException();
 		} catch ( DataBindingException e ) {

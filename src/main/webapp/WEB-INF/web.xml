@@ -185,6 +185,7 @@
 	<filter-mapping>
 		<filter-name>profilesCustomDispatcher</filter-name>
 		<url-pattern>/profiles/*</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
 	</filter-mapping>
 	
 	<!-- timecard filtering for proper internal redirection/forwarding -->
@@ -195,11 +196,11 @@
 			<param-name>custom-dispatcher-forward</param-name>
 			<param-value>
 				<![CDATA[
-					^.+(\/timecard\/\d+)(\/totaltime.*)$ => $2
-					^.+(\/timecard\/\d+)(\/clockinclockout.*)$ => $2
-					^.+(\/timecard\/\d+)(\/manualentering.*)$ => $2
-					^.+(\/timecard\/\d+)(\/expectedhours.*)$ => $2
-					^.+(\/timecard\/\d+)(\/notes.*)$ => $2
+					^.+(\/timecard)(\/totaltime.*)$ => $2
+					^.+(\/timecard)(\/clockinclockout.*)$ => $2
+					^.+(\/timecard)(\/manualentering.*)$ => $2
+					^.+(\/timecard)(\/expectedhours.*)$ => $2
+					^.+(\/timecard)(\/notes.*)$ => $2
 				]]>
 			</param-value>
 		</init-param>
@@ -207,6 +208,8 @@
 	<filter-mapping>
 		<filter-name>timeCardCustomDispatcher</filter-name>
 		<url-pattern>/timecard/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
 	</filter-mapping>
 	
 </web-app>
