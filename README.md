@@ -1,5 +1,11 @@
 # clockinclockout-rest | clkio-rest
 
+Further details, please take a look at the related wiki;
+
+https://github.com/jeanvillete/clockinclockout-rest/wiki
+
+***
+
 Related projects;
 - clockinclockout-jaxws; https://github.com/jeanvillete/clockinclockout-jaxws
 - clockinclockout-schemas; https://github.com/jeanvillete/clockinclockout-schemas
