@@ -43,7 +43,17 @@ public class User {
     @XmlElement(required = true, defaultValue = "pt_br")
     protected String locale;
 
-    /**
+    public User() {
+    	super();
+    }
+    
+    public User( String email, String password ) {
+		super();
+		this.email = email;
+		this.password = password;
+	}
+
+	/**
      * Gets the value of the email property.
      * 
      * @return

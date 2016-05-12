@@ -67,6 +67,16 @@
 		<url-pattern>/login/*</url-pattern>
 	</servlet-mapping>
 	
+	<!-- logout -->
+	<servlet>
+		<servlet-name>logoutServlet</servlet-name>
+		<servlet-class>com.clkio.web.LogoutServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>logoutServlet</servlet-name>
+		<url-pattern>/logout/*</url-pattern>
+	</servlet-mapping>
+	
 	<!-- password -->
 	<servlet>
 		<servlet-name>passwordServlet</servlet-name>
