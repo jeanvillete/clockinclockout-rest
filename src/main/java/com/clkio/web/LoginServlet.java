@@ -56,11 +56,12 @@ public class LoginServlet extends CommonHttpServlet {
 			User user = new User( userAndPass[0], userAndPass[1] );
 
 			out.print( this.service.doLogin( new DoLoginRequest( user ) ).getMessage( accept ) );
-			resp.setStatus( HttpServletResponse.SC_CREATED );
+			resp.setStatus( HttpServletResponse.SC_OK );
 		} catch ( DataBindingException e ) {
 			resp.setStatus( HttpServletResponse.SC_BAD_REQUEST );
 		} catch ( ResponseException e ) {
-			resp.setStatus( e.getStatusCode() );
+			resp.setHeader( HeaderAuthenticate.KEY.getMessage(), HeaderAuthenticate.VALUE.getMessage() );
+			resp.setStatus( HttpServletResponse.SC_UNAUTHORIZED );
 			out.println( e.getMessage( accept ) );
 		} catch ( UnauthorizedException e ) {
 			resp.setHeader( HeaderAuthenticate.KEY.getMessage(), HeaderAuthenticate.VALUE.getMessage() );

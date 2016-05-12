@@ -34,7 +34,7 @@ public class LogoutServlet extends CommonHttpServlet {
 			if ( accept == null ) throw new NotAcceptableException( "Header 'Accept' is mandatory and has to be either 'application/json' or 'application/xml'." );
 			resp.setContentType( accept.getValue() );
 			out.print( this.service.doLogout( req.getHeader( AppConstants.CLKIO_LOGIN_CODE ), new DoLogoutRequest() ).getMessage( accept ) );
-			resp.setStatus( HttpServletResponse.SC_CREATED );
+			resp.setStatus( HttpServletResponse.SC_OK );
 		} catch ( DataBindingException e ) {
 			resp.setStatus( HttpServletResponse.SC_BAD_REQUEST );
 		} catch ( ResponseException e ) {
