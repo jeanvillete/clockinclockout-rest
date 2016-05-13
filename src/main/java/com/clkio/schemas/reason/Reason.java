@@ -2,10 +2,13 @@
 package com.clkio.schemas.reason;
 
 import java.math.BigInteger;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
+
+import com.clkio.schemas.common.CommonDomain;
 import com.clkio.schemas.profile.Profile;
 
 
@@ -17,13 +20,12 @@ import com.clkio.schemas.profile.Profile;
  * <pre>
  * &lt;complexType name="reason">
  *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+ *     &lt;extension base="{http://schemas.clkio.com/common}commonDomain">
  *       &lt;sequence>
- *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}integer"/>
  *         &lt;element name="reason" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="profile" type="{http://schemas.clkio.com/profile}profile"/>
  *       &lt;/sequence>
- *     &lt;/restriction>
+ *     &lt;/extension>
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
@@ -32,20 +34,19 @@ import com.clkio.schemas.profile.Profile;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "reason", propOrder = {
-    "id",
     "reason",
     "profile"
 })
-public class Reason {
+public class Reason
+    extends CommonDomain
+{
 
-    @XmlElement(required = true)
-    protected BigInteger id;
     @XmlElement(required = true)
     protected String reason;
     @XmlElement(required = true)
     protected Profile profile;
 
-    public Reason() {
+	public Reason() {
     	super();
     }
     
@@ -53,30 +54,6 @@ public class Reason {
 		super();
 		this.id = id;
 	}
-
-	/**
-     * Gets the value of the id property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
-     */
-    public BigInteger getId() {
-        return id;
-    }
-
-    /**
-     * Sets the value of the id property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
-     */
-    public void setId(BigInteger value) {
-        this.id = value;
-    }
 
     /**
      * Gets the value of the reason property.

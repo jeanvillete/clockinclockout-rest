@@ -56,7 +56,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
     GetTimeCardResponse.class,
     ListAdjustingResponse.class,
     ListProfileResponse.class,
-    ConfirmResetPasswordResponse.class
+    ConfirmResetPasswordResponse.class,
+    ResponseCreated.class
 })
 public class Response {
 

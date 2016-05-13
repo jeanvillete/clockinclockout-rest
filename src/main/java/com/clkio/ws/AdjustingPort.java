@@ -13,6 +13,7 @@ import com.clkio.schemas.adjusting.ListAdjustingRequest;
 import com.clkio.schemas.adjusting.ListAdjustingResponse;
 import com.clkio.schemas.adjusting.UpdateAdjustingRequest;
 import com.clkio.schemas.common.Response;
+import com.clkio.schemas.common.ResponseCreated;
 
 
 /**
@@ -64,12 +65,12 @@ public interface AdjustingPort {
      * @param request
      * @param clkioLoginCode
      * @return
-     *     returns com.clkio.schemas.common.Response
+     *     returns com.clkio.schemas.common.ResponseCreated
      * @throws ResponseException
      */
     @WebMethod
-    @WebResult(name = "response", targetNamespace = "http://schemas.clkio.com", partName = "result")
-    public Response insert(
+    @WebResult(name = "responseCreated", targetNamespace = "http://schemas.clkio.com", partName = "result")
+    public ResponseCreated insert(
         @WebParam(name = "clkioLoginCode", targetNamespace = "http://schemas.clkio.com", header = true, partName = "clkioLoginCode")
         String clkioLoginCode,
         @WebParam(name = "insertAdjustingRequest", targetNamespace = "http://schemas.clkio.com", partName = "request")

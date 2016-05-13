@@ -2,10 +2,12 @@
 package com.clkio.schemas.clockinclockout;
 
 import java.math.BigInteger;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
+
 import com.clkio.schemas.day.DayEntering;
 
 
@@ -19,7 +21,6 @@ import com.clkio.schemas.day.DayEntering;
  *   &lt;complexContent>
  *     &lt;extension base="{http://schemas.clkio.com/day}dayEntering">
  *       &lt;sequence>
- *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}integer"/>
  *         &lt;element name="clockin" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="clockout" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
@@ -32,7 +33,6 @@ import com.clkio.schemas.day.DayEntering;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "clockinclockout", propOrder = {
-    "id",
     "clockin",
     "clockout"
 })
@@ -40,8 +40,6 @@ public class Clockinclockout
     extends DayEntering
 {
 
-    @XmlElement(required = true)
-    protected BigInteger id;
     @XmlElement(required = true)
     protected String clockin;
     @XmlElement(required = true)
@@ -55,30 +53,6 @@ public class Clockinclockout
 		super();
 		this.id = id;
 	}
-
-	/**
-     * Gets the value of the id property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link BigInteger }
-     *     
-     */
-    public BigInteger getId() {
-        return id;
-    }
-
-    /**
-     * Sets the value of the id property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link BigInteger }
-     *     
-     */
-    public void setId(BigInteger value) {
-        this.id = value;
-    }
 
     /**
      * Gets the value of the clockin property.
