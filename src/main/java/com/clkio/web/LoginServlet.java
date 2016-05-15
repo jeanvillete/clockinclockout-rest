@@ -62,7 +62,7 @@ public class LoginServlet extends CommonHttpServlet {
 		} catch ( ResponseException e ) {
 			resp.setHeader( HeaderAuthenticate.KEY.getMessage(), HeaderAuthenticate.VALUE.getMessage() );
 			resp.setStatus( HttpServletResponse.SC_UNAUTHORIZED );
-			out.println( e.getMessage( accept ) );
+			out.print( e.getMessage( accept ) );
 		} catch ( UnauthorizedException e ) {
 			resp.setHeader( HeaderAuthenticate.KEY.getMessage(), HeaderAuthenticate.VALUE.getMessage() );
 			resp.setStatus( e.getStatusCode() );

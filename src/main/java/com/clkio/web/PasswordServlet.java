@@ -64,7 +64,7 @@ public class PasswordServlet extends CommonHttpServlet {
 			resp.setStatus( HttpServletResponse.SC_BAD_REQUEST );
 		} catch ( ResponseException e ) {
 			resp.setStatus( e.getStatusCode() );
-			out.println( e.getMessage( accept ) );
+			out.print( e.getMessage( accept ) );
 		} catch ( RestException e ) {
 			resp.sendError( e.getStatusCode(), e.getMessage() );
 		} catch ( Exception e ) {
@@ -113,7 +113,7 @@ public class PasswordServlet extends CommonHttpServlet {
 			resp.setStatus( HttpServletResponse.SC_BAD_REQUEST );
 		} catch ( ResponseException e ) {
 			resp.setStatus( e.getStatusCode() );
-			out.println( e.getMessage( accept ) );
+			out.print( e.getMessage( accept ) );
 		} catch ( RestException e ) {
 			resp.sendError( e.getStatusCode(), e.getMessage() );
 		} catch ( Exception e ) {
