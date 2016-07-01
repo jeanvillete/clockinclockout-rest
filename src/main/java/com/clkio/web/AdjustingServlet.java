@@ -10,7 +10,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.DataBindingException;
-import javax.xml.bind.JAXB;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -29,7 +28,6 @@ import com.clkio.ws.AdjustingPort;
 import com.clkio.ws.ResponseException;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class AdjustingServlet extends CommonHttpServlet {
 
@@ -81,14 +79,8 @@ public class AdjustingServlet extends CommonHttpServlet {
 			if ( accept == null ) throw new NotAcceptableException( "Header 'Accept' is mandatory and has to be either 'application/json' or 'application/xml'." );
 			resp.setContentType( accept.getValue() );
 
-			Adjusting adjusting = null;
 			ContentType contentType = ContentType.parse( req.getHeader( "Content-Type" ) );
-			if ( contentType == null ) throw new NotAcceptableException( "Header 'Content-Type' is mandatory and has to be either 'application/json' or 'application/xml'." );
-			else if ( contentType.equals( ContentType.APPLICATION_JSON ) )
-				adjusting = new ObjectMapper().readValue( req.getReader(), Adjusting.class );
-			else if ( contentType.equals( ContentType.APPLICATION_XML ) )
-				adjusting = JAXB.unmarshal( req.getReader(), Adjusting.class );
-			else throw new IllegalStateException( "No valid value for header 'Content-Type'. contentType=[" + accept.getValue() + "]" );
+			Adjusting adjusting = this.getMarshaller( contentType ).readValue( req.getReader(), Adjusting.class );
 			
 			Matcher matcher = Pattern.compile( "^http.+\\/adjustings\\/profiles\\/(\\d+)\\/?$" ).matcher( req.getRequestURL().toString() );
 			if ( matcher.matches() ) {
@@ -126,14 +118,8 @@ public class AdjustingServlet extends CommonHttpServlet {
 			if ( accept == null ) throw new NotAcceptableException( "Header 'Accept' is mandatory and has to be either 'application/json' or 'application/xml'." );
 			resp.setContentType( accept.getValue() );
 
-			Adjusting adjusting = null;
 			ContentType contentType = ContentType.parse( req.getHeader( "Content-Type" ) );
-			if ( contentType == null ) throw new NotAcceptableException( "Header 'Content-Type' is mandatory and has to be either 'application/json' or 'application/xml'." );
-			else if ( contentType.equals( ContentType.APPLICATION_JSON ) )
-				adjusting = new ObjectMapper().readValue( req.getReader(), Adjusting.class );
-			else if ( contentType.equals( ContentType.APPLICATION_XML ) )
-				adjusting = JAXB.unmarshal( req.getReader(), Adjusting.class );
-			else throw new IllegalStateException( "No valid value for header 'Content-Type'. contentType=[" + accept.getValue() + "]" );
+			Adjusting adjusting = this.getMarshaller( contentType ).readValue( req.getReader(), Adjusting.class );
 			
 			Matcher matcher = Pattern.compile( "^http.+\\/adjustings\\/(\\d+)\\/profiles\\/(\\d+)\\/?$" ).matcher( req.getRequestURL().toString() );
 			if ( matcher.matches() ) {

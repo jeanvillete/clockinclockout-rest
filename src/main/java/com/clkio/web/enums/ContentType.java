@@ -16,8 +16,7 @@ public enum ContentType {
 	public static ContentType parse( String headerValue ) {
 		if ( !StringUtils.hasText( headerValue ) )
 			return null;
-		headerValue = headerValue.trim();
-		for ( String accept : headerValue.split( ";" ) ) {
+		for ( String accept : headerValue.trim().split( ";" ) ) {
 			accept = accept.trim();
 			if ( accept.equals( APPLICATION_JSON.getValue() ) ) return APPLICATION_JSON;
 			if ( accept.equals( APPLICATION_XML.getValue() ) ) return APPLICATION_XML;

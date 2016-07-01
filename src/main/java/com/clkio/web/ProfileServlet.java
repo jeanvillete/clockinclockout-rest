@@ -10,7 +10,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.DataBindingException;
-import javax.xml.bind.JAXB;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -28,7 +27,6 @@ import com.clkio.ws.ProfilePort;
 import com.clkio.ws.ResponseException;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class ProfileServlet extends CommonHttpServlet {
 
@@ -71,14 +69,8 @@ public class ProfileServlet extends CommonHttpServlet {
 			if ( accept == null ) throw new NotAcceptableException( "Header 'Accept' is mandatory and has to be either 'application/json' or 'application/xml'." );
 			resp.setContentType( accept.getValue() );
 
-			Profile profile = null;
 			ContentType contentType = ContentType.parse( req.getHeader( "Content-Type" ) );
-			if ( contentType == null ) throw new NotAcceptableException( "Header 'Content-Type' is mandatory and has to be either 'application/json' or 'application/xml'." );
-			else if ( contentType.equals( ContentType.APPLICATION_JSON ) )
-				profile = new ObjectMapper().readValue( req.getReader(), Profile.class );
-			else if ( contentType.equals( ContentType.APPLICATION_XML ) )
-				profile = JAXB.unmarshal( req.getReader(), Profile.class );
-			else throw new IllegalStateException( "No valid value for header 'Content-Type'. contentType=[" + accept.getValue() + "]" );
+			Profile profile = this.getMarshaller( contentType ).readValue( req.getReader(), Profile.class );
 			
 			out.print( this.service.insert( req.getHeader( AppConstants.CLKIO_LOGIN_CODE ), new InsertProfileRequest( profile ) ).getMessage( accept ) );
 			resp.setStatus( HttpServletResponse.SC_CREATED );
@@ -108,14 +100,8 @@ public class ProfileServlet extends CommonHttpServlet {
 			if ( accept == null ) throw new NotAcceptableException( "Header 'Accept' is mandatory and has to be either 'application/json' or 'application/xml'." );
 			resp.setContentType( accept.getValue() );
 
-			Profile profile = null;
 			ContentType contentType = ContentType.parse( req.getHeader( "Content-Type" ) );
-			if ( contentType == null ) throw new NotAcceptableException( "Header 'Content-Type' is mandatory and has to be either 'application/json' or 'application/xml'." );
-			else if ( contentType.equals( ContentType.APPLICATION_JSON ) )
-				profile = new ObjectMapper().readValue( req.getReader(), Profile.class );
-			else if ( contentType.equals( ContentType.APPLICATION_XML ) )
-				profile = JAXB.unmarshal( req.getReader(), Profile.class );
-			else throw new IllegalStateException( "No valid value for header 'Content-Type'. contentType=[" + accept.getValue() + "]" );
+			Profile profile = this.getMarshaller( contentType ).readValue( req.getReader(), Profile.class );
 			
 			Matcher matcher = Pattern.compile( "^http.+\\/profiles\\/(\\d+)\\/?$" ).matcher( req.getRequestURL().toString() );
 			if ( matcher.matches() ) {
