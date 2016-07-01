@@ -40,8 +40,8 @@ import com.clkio.schemas.reason.Reason;
 @XmlSeeAlso({
     Email.class,
     Profile.class,
-    Adjusting.class,
     Reason.class,
+    Adjusting.class,
     DayEntering.class
 })
 public class CommonDomain {
