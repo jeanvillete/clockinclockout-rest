@@ -11,7 +11,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.DataBindingException;
-import javax.xml.bind.JAXB;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
@@ -32,7 +31,6 @@ import com.clkio.ws.EmailPort;
 import com.clkio.ws.ResponseException;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class EmailServlet extends CommonHttpServlet {
 
@@ -50,14 +48,8 @@ public class EmailServlet extends CommonHttpServlet {
 			if ( accept == null ) throw new NotAcceptableException( "Header 'Accept' is mandatory and has to be either 'application/json' or 'application/xml'." );
 			resp.setContentType( accept.getValue() );
 			
-			Email email = null;
 			ContentType contentType = ContentType.parse( req.getHeader( "Content-Type" ) );
-			if ( contentType == null ) throw new NotAcceptableException( "Header 'Content-Type' is mandatory and has to be either 'application/json' or 'application/xml'." );
-			else if ( contentType.equals( ContentType.APPLICATION_JSON ) )
-				email = new ObjectMapper().readValue( req.getReader(), Email.class );
-			else if ( contentType.equals( ContentType.APPLICATION_XML ) )
-				email = JAXB.unmarshal( req.getReader(), Email.class );
-			else throw new IllegalStateException( "No valid value for header 'Content-Type'. contentType=[" + accept.getValue() + "]" );
+			Email email = this.getMarshaller( contentType ).readValue( req.getReader(), Email.class );
 
 			Response response = null;
 			int statusCode;
@@ -101,14 +93,8 @@ public class EmailServlet extends CommonHttpServlet {
 			if ( accept == null ) throw new NotAcceptableException( "Header 'Accept' is mandatory and has to be either 'application/json' or 'application/xml'." );
 			resp.setContentType( accept.getValue() );
 			
-			Email email = null;
 			ContentType contentType = ContentType.parse( req.getHeader( "Content-Type" ) );
-			if ( contentType == null ) throw new NotAcceptableException( "Header 'Content-Type' is mandatory and has to be either 'application/json' or 'application/xml'." );
-			else if ( contentType.equals( ContentType.APPLICATION_JSON ) )
-				email = new ObjectMapper().readValue( req.getReader(), Email.class );
-			else if ( contentType.equals( ContentType.APPLICATION_XML ) )
-				email = JAXB.unmarshal( req.getReader(), Email.class );
-			else throw new IllegalStateException( "No valid value for header 'Content-Type'. contentType=[" + accept.getValue() + "]" );
+			Email email = this.getMarshaller( contentType ).readValue( req.getReader(), Email.class );
 
 			if ( !email.isPrimary() )
 				throw new BadRequestException( "This service is aimed to set an 'email' record as primary, so this property has to be 'true'." );

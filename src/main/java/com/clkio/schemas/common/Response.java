@@ -4,7 +4,6 @@ package com.clkio.schemas.common;
 import java.io.IOException;
 import java.io.StringWriter;
 
-import javax.xml.bind.JAXB;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -22,6 +21,7 @@ import com.clkio.schemas.timecard.GetTotalTimeMonthlyResponse;
 import com.clkio.schemas.timecard.GetTotalTimeResponse;
 import com.clkio.web.enums.ContentType;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
 
 /**
@@ -97,18 +97,27 @@ public class Response {
     }
 
     public String getMessage( ContentType accept ) {
-    	StringWriter sw = new StringWriter();
-		
+		ObjectMapper om = null;
     	if ( accept == null ) throw new IllegalArgumentException( "Argument 'accept' is mandatory." );
 		else if ( accept.equals( ContentType.APPLICATION_JSON ) )
-			try {
-				new ObjectMapper().writeValue( sw, this );
-			} catch ( IOException e ) { }
+			om = new ObjectMapper();
 		else if ( accept.equals( ContentType.APPLICATION_XML ) )
-			JAXB.marshal( this, sw );
+			om = new XmlMapper();
 		else throw new IllegalArgumentException( "Invalid value for 'accept' argument." );
 		
-		return sw.toString();
+    	StringWriter sw = null;
+    	try {
+    		sw = new StringWriter();
+			om.writeValue( sw, this );
+			return sw.toString();
+		} catch ( IOException e ) {
+			throw new RuntimeException( "Impossible marshall content.", e );
+		} finally {
+			try {
+				if ( sw != null ) sw.close();
+			} catch ( IOException e ) {
+				throw new RuntimeException( e );
+			}
+		}
 	}
-    
 }
