@@ -35,11 +35,12 @@ public class NotesServlet extends CommonHttpServlet {
 	@Override
 	protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		ContentType accept = null;
-		PrintWriter out = resp.getWriter();
+		PrintWriter out = null;
 		try {
 			accept = ContentType.parse( req.getHeader( "Accept" ) );
 			if ( accept == null ) throw new NotAcceptableException( "Header 'Accept' is mandatory and has to be either 'application/json' or 'application/xml'." );
-			resp.setContentType( accept.getValue() );
+			resp.setContentType( accept.getValue() + "; charset=UTF-8" );
+			out = resp.getWriter();
 			
 			ContentType contentType = ContentType.parse( req.getHeader( "Content-Type" ) );
 			SetNotesRequest notesRequest = this.getMarshaller( contentType ).readValue( req.getReader(), SetNotesRequest.class );

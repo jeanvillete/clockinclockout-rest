@@ -39,11 +39,13 @@ public class AdjustingServlet extends CommonHttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		ContentType accept = null;
-		PrintWriter out = resp.getWriter();
+		PrintWriter out = null;
 		try {
 			accept = ContentType.parse( req.getHeader( "Accept" ) );
 			if ( accept == null ) throw new NotAcceptableException( "Header 'Accept' is mandatory and has to be either 'application/json' or 'application/xml'." );
-			resp.setContentType( accept.getValue() );
+			resp.setContentType( accept.getValue() + "; charset=UTF-8" );
+			out = resp.getWriter();
+			
 			Matcher matcher = Pattern.compile( "^http.+\\/adjustings\\/profiles\\/(\\d+)\\/?$" ).matcher( req.getRequestURL().toString() );
 			if ( matcher.matches() ) {
 				BigInteger profileId;
@@ -73,11 +75,12 @@ public class AdjustingServlet extends CommonHttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		ContentType accept = null;
-		PrintWriter out = resp.getWriter();
+		PrintWriter out = null;
 		try {
 			accept = ContentType.parse( req.getHeader( "Accept" ) );
 			if ( accept == null ) throw new NotAcceptableException( "Header 'Accept' is mandatory and has to be either 'application/json' or 'application/xml'." );
-			resp.setContentType( accept.getValue() );
+			resp.setContentType( accept.getValue() + "; charset=UTF-8" );
+			out = resp.getWriter();
 
 			ContentType contentType = ContentType.parse( req.getHeader( "Content-Type" ) );
 			Adjusting adjusting = this.getMarshaller( contentType ).readValue( req.getReader(), Adjusting.class );
@@ -112,11 +115,12 @@ public class AdjustingServlet extends CommonHttpServlet {
 	@Override
 	protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		ContentType accept = null;
-		PrintWriter out = resp.getWriter();
+		PrintWriter out = null;
 		try {
 			accept = ContentType.parse( req.getHeader( "Accept" ) );
 			if ( accept == null ) throw new NotAcceptableException( "Header 'Accept' is mandatory and has to be either 'application/json' or 'application/xml'." );
-			resp.setContentType( accept.getValue() );
+			resp.setContentType( accept.getValue() + "; charset=UTF-8" );
+			out = resp.getWriter();
 
 			ContentType contentType = ContentType.parse( req.getHeader( "Content-Type" ) );
 			Adjusting adjusting = this.getMarshaller( contentType ).readValue( req.getReader(), Adjusting.class );
@@ -152,11 +156,13 @@ public class AdjustingServlet extends CommonHttpServlet {
 	@Override
 	protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		ContentType accept = null;
-		PrintWriter out = resp.getWriter();
+		PrintWriter out = null;
 		try {
 			accept = ContentType.parse( req.getHeader( "Accept" ) );
 			if ( accept == null ) throw new NotAcceptableException( "Header 'Accept' is mandatory and has to be either 'application/json' or 'application/xml'." );
-			resp.setContentType( accept.getValue() );
+			resp.setContentType( accept.getValue() + "; charset=UTF-8" );
+			out = resp.getWriter();
+			
 			Adjusting adjusting = null;
 			Matcher matcher = Pattern.compile( "^http.+\\/adjustings\\/(\\d+)\\/profiles\\/(\\d+)\\/?$" ).matcher( req.getRequestURL().toString() );
 			if ( matcher.matches() ) {

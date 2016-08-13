@@ -35,11 +35,12 @@ public class LoginServlet extends CommonHttpServlet {
 	@Override
 	protected void doGet( HttpServletRequest req, HttpServletResponse resp ) throws ServletException, IOException {
 		ContentType accept = null;
-		PrintWriter out = resp.getWriter();
+		PrintWriter out = null;
 		try {
 			accept = ContentType.parse( req.getHeader( "Accept" ) );
 			if ( accept == null ) throw new NotAcceptableException( "Header 'Accept' is mandatory and has to be either 'application/json' or 'application/xml'." );
-			resp.setContentType( accept.getValue() );
+			resp.setContentType( accept.getValue() + "; charset=UTF-8" );
+			out = resp.getWriter();
 			
 			String authorization = req.getHeader( "Authorization" );
 			if ( !StringUtils.hasText( authorization ) ) throw new UnauthorizedException();

@@ -38,11 +38,13 @@ public class ProfileServlet extends CommonHttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		ContentType accept = null;
-		PrintWriter out = resp.getWriter();
+		PrintWriter out = null;
 		try {
 			accept = ContentType.parse( req.getHeader( "Accept" ) );
 			if ( accept == null ) throw new NotAcceptableException( "Header 'Accept' is mandatory and has to be either 'application/json' or 'application/xml'." );
-			resp.setContentType( accept.getValue() );
+			resp.setContentType( accept.getValue() + "; charset=UTF-8" );
+			out = resp.getWriter();
+			
 			out.print( this.service.list( req.getHeader( AppConstants.CLKIO_LOGIN_CODE ), new ListProfileRequest() ).getMessage( accept ) );
 			resp.setStatus( HttpServletResponse.SC_OK );
 		} catch ( DataBindingException e ) {
@@ -63,11 +65,12 @@ public class ProfileServlet extends CommonHttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		ContentType accept = null;
-		PrintWriter out = resp.getWriter();
+		PrintWriter out = null;
 		try {
 			accept = ContentType.parse( req.getHeader( "Accept" ) );
 			if ( accept == null ) throw new NotAcceptableException( "Header 'Accept' is mandatory and has to be either 'application/json' or 'application/xml'." );
-			resp.setContentType( accept.getValue() );
+			resp.setContentType( accept.getValue() + "; charset=UTF-8" );
+			out = resp.getWriter();
 
 			ContentType contentType = ContentType.parse( req.getHeader( "Content-Type" ) );
 			Profile profile = this.getMarshaller( contentType ).readValue( req.getReader(), Profile.class );
@@ -94,11 +97,12 @@ public class ProfileServlet extends CommonHttpServlet {
 	@Override
 	protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		ContentType accept = null;
-		PrintWriter out = resp.getWriter();
+		PrintWriter out = null;
 		try {
 			accept = ContentType.parse( req.getHeader( "Accept" ) );
 			if ( accept == null ) throw new NotAcceptableException( "Header 'Accept' is mandatory and has to be either 'application/json' or 'application/xml'." );
-			resp.setContentType( accept.getValue() );
+			resp.setContentType( accept.getValue() + "; charset=UTF-8" );
+			out = resp.getWriter();
 
 			ContentType contentType = ContentType.parse( req.getHeader( "Content-Type" ) );
 			Profile profile = this.getMarshaller( contentType ).readValue( req.getReader(), Profile.class );
@@ -134,11 +138,12 @@ public class ProfileServlet extends CommonHttpServlet {
 	@Override
 	protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		ContentType accept = null;
-		PrintWriter out = resp.getWriter();
+		PrintWriter out = null;
 		try {
 			accept = ContentType.parse( req.getHeader( "Accept" ) );
 			if ( accept == null ) throw new NotAcceptableException( "Header 'Accept' is mandatory and has to be either 'application/json' or 'application/xml'." );
-			resp.setContentType( accept.getValue() );
+			resp.setContentType( accept.getValue() + "; charset=UTF-8" );
+			out = resp.getWriter();
 
 			Profile profile = null;
 			Matcher matcher = Pattern.compile( "^http.+\\/profiles\\/(\\d+)\\/?$" ).matcher( req.getRequestURL().toString() );
