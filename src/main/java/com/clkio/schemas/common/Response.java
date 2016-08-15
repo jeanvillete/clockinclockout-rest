@@ -16,9 +16,7 @@ import com.clkio.schemas.login.LoginResponse;
 import com.clkio.schemas.profile.ListProfileResponse;
 import com.clkio.schemas.reason.ListManualEnteringReasonResponse;
 import com.clkio.schemas.resetpassword.ConfirmResetPasswordResponse;
-import com.clkio.schemas.timecard.GetTimeCardResponse;
-import com.clkio.schemas.timecard.GetTotalTimeMonthlyResponse;
-import com.clkio.schemas.timecard.GetTotalTimeResponse;
+import com.clkio.schemas.timecard.TimeCardResponse;
 import com.clkio.web.enums.ContentType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
@@ -48,12 +46,10 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
     "message"
 })
 @XmlSeeAlso({
+    TimeCardResponse.class,
     ListEmailResponse.class,
-    GetTotalTimeResponse.class,
-    GetTotalTimeMonthlyResponse.class,
     ListManualEnteringReasonResponse.class,
     LoginResponse.class,
-    GetTimeCardResponse.class,
     ListAdjustingResponse.class,
     ListProfileResponse.class,
     ConfirmResetPasswordResponse.class,

@@ -127,16 +127,6 @@
 		<url-pattern>/timecard/*</url-pattern>
 	</servlet-mapping>
 	
-	<!-- totaltime -->
-	<servlet>
-		<servlet-name>totalTimeServlet</servlet-name>
-		<servlet-class>com.clkio.web.TotalTimeServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>totalTimeServlet</servlet-name>
-		<url-pattern>/totaltime/*</url-pattern>
-	</servlet-mapping>
-	
 	<!-- clockinclockout -->
 	<servlet>
 		<servlet-name>clockinClockoutServlet</servlet-name>
@@ -206,7 +196,6 @@
 			<param-name>custom-dispatcher-forward</param-name>
 			<param-value>
 				<![CDATA[
-					^.+(\/timecard)(\/totaltime.*)$ => $2
 					^.+(\/timecard)(\/clockinclockout.*)$ => $2
 					^.+(\/timecard)(\/manualentering.*)$ => $2
 					^.+(\/timecard)(\/expectedhours.*)$ => $2
