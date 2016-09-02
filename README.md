@@ -4,7 +4,7 @@ Backend REST services hosted on http://rest.clkio.com, acting on behalf of http:
 
 ***
 
-Further details, please take a look at the related wiki;
+Further details, sample requests and correspondent responses, please take a look at the related wiki;
 
 https://github.com/jeanvillete/clockinclockout-rest/wiki
 
@@ -13,6 +13,7 @@ https://github.com/jeanvillete/clockinclockout-rest/wiki
 Related projects;
 - clockinclockout-jaxws; https://github.com/jeanvillete/clockinclockout-jaxws
 - clockinclockout-schemas; https://github.com/jeanvillete/clockinclockout-schemas
+- clockinclockout-cris; https://github.com/jeanvillete/clockinclockout-cris
 
 ***
 
