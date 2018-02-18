@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>clockinclockout</groupId>
 	<artifactId>clockinclockout-rest</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1-SNAPSHOT+0.0.1</version>
 	<packaging>war</packaging>
 	
 	<properties>
@@ -79,8 +79,4 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-	
-	<build>
-		<finalName>clkio-rest</finalName>
-	</build>
 </project>
